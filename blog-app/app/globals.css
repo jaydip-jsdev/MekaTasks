@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+/* editor.css */
+
+.tiptap {
+  min-height: 300px;
+  /* padding: 16px; */
+  outline: none;
+  /* line-height: 1.7; */
+  color: #111827;
+}
+
+/* Paragraph */
+/* .tiptap p {
+  margin: 12px 0;
+} */
+
+/* Headings */
+.tiptap h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  /* margin: 20px 0 12px; */
+  line-height: 1.2;
+}
+
+.tiptap h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  /* margin: 18px 0 10px; */
+  line-height: 1.3;
+}
+
+.tiptap h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  /* margin: 16px 0 8px; */
+  line-height: 1.4;
+}
+
+.tiptap h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  /* margin: 14px 0 8px; */
+}
+
+.tiptap h5 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.tiptap h6 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Lists */
+.tiptap ul {
+  list-style-type: disc;
+  padding-left: 24px;
+  margin: 12px 0;
+}
+
+.tiptap ol {
+  list-style-type: decimal;
+  padding-left: 24px;
+  margin: 12px 0;
+}
+
+.tiptap li {
+  margin: 6px 0;
+}
+
+/* Blockquote */
+.tiptap blockquote {
+  border-left: 4px solid #d1d5db;
+  padding-left: 16px;
+  margin: 16px 0;
+  font-style: italic;
+  color: #4b5563;
+}
+
+/* Code inline */
+.tiptap code {
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-family: monospace;
+}
+
+/* Code block */
+.tiptap pre {
+  background: #111827;
+  color: white;
+  padding: 16px;
+  border-radius: 10px;
+  overflow-x: auto;
+  margin: 16px 0;
+}
+
+.tiptap pre code {
+  background: transparent;
+  padding: 0;
+}
+
+/* Bold */
+.tiptap strong {
+  font-weight: 700;
+}
+
+/* Italic */
+.tiptap em {
+  font-style: italic;
+}
+
+/* Link */
+.tiptap a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* Horizontal line */
+.tiptap hr {
+  border: none;
+  border-top: 2px solid #e5e7eb;
+  margin: 20px 0;
+}
+
+/* Images */
+.tiptap img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin: 16px 0;
+}
+
+/* Placeholder */
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
