@@ -1,0 +1,70 @@
+.cardContainer {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.container {
+  background-color: #faedf5;
+  padding-bottom: 10vh;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    padding-left: 6vw;
+    padding-right: 6vw;
+  }
+}
+
+.content {
+  max-width: 1152px;
+  margin: auto;
+}
+
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recent {
+  font-weight: 400;
+  font-size: 1.375rem;
+  line-height: 60px;
+  color: #21243d;
+}
+
+.view {
+  color: #00a8cc;
+  cursor: pointer;
+}
+
+.card {
+  max-width: 320px;
+  min-height: 250px;
+  background: #ffffff;
+  box-shadow: 0px 4px 10px 0px #bbe1fa40;
+  padding: 24px;
+  border-radius: 4px;
+}
+
+.cardHeading {
+  color: #21243d;
+  font-weight: 700;
+  line-height: 100%;
+  font-size: 26px;
+}
+
+.options {
+  display: flex;
+  gap: 15px;
+  margin: 18px 12px 15px 0px;
+}
+
+.cardDesc {
+  font-size: 16px;
+  font-weight: 400;
+  color: #21243d;
+}
