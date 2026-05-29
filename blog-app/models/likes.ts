@@ -1,4 +1,3 @@
-import { timeStamp } from "console";
 import mongoose, { Document, Schema } from "mongoose";
 
 interface LikeInterface extends Document {
@@ -26,5 +25,5 @@ const LikeSchema = new Schema<LikeInterface>(
 
 LikeSchema.index({ user: 1, blog: 1 }, { unique: true });
 
-const Like =
+export const LikesModal =
   mongoose.models.Like || mongoose.model<LikeInterface>("Like", LikeSchema);
