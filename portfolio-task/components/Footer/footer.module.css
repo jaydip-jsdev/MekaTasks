@@ -1,0 +1,18 @@
+.footer {
+  height: 182px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 6vh;
+  margin-bottom: 6vh;
+}
+
+.footerIcons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
