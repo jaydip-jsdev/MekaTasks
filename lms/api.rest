@@ -1,0 +1,44 @@
+### register user 
+POST http://localhost:3000/api/register
+Content-Type : application/json
+
+{
+    "name": "Yasin",
+    "email" : "admin@gmail.com",
+    "password": "admin123"
+}
+
+### login user
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+    "email" : "admin@gmail.com",
+    "password" : "admin123"
+}
+
+
+### create category
+POST http://localhost:3000/api/categories/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMWQ1OTI4NWM3YmVjZWVlMjI0ZWNiNCIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgwMzE0MzMxLCJleHAiOjE3ODAzMTc5MzF9.iQcM0vjixCHNuQSyGrhSkvhJ4IcIsS0rtkZNydQv7Bg
+
+{
+    "name" : "new",
+    "slug" : "new"
+}
+
+### create course
+POST http://localhost:3000/api/courses/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMWQ1OTI4NWM3YmVjZWVlMjI0ZWNiNCIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgwMzE0MzMxLCJleHAiOjE3ODAzMTc5MzF9.iQcM0vjixCHNuQSyGrhSkvhJ4IcIsS0rtkZNydQv7Bg
+
+{
+    "title" : "jkkjkj",
+    "slug" : "pbbkjkljkbb",
+    "description" : "this course is for next.js",
+    "category" : "bca"
+}
+
+### Get All courses
+GET http://localhost:3000/api/courses

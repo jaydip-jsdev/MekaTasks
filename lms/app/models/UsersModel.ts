@@ -1,4 +1,4 @@
-import { Schema, Types } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 
 interface IUsers {
   name: string;
@@ -10,7 +10,7 @@ interface IUsers {
   enrolledCourses: Types.ObjectId[];
 }
 
-const UserScheam = new Schema(
+const UserScheam = new Schema<IUsers>(
   {
     name: {
       type: String,
@@ -39,3 +39,7 @@ const UserScheam = new Schema(
   },
   { timestamps: true },
 );
+
+const UserModel =
+  mongoose.models.User || mongoose.model<IUsers>("User", UserScheam);
+export default UserModel;
