@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { Login } from "@/services/api";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const router = useRouter();
 

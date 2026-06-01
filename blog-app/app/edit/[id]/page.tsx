@@ -12,9 +12,9 @@ const EditBlog = () => {
   const { id } = useParams();
   const router = useRouter();
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [content, setContent] = useState<string>("");
 
   const fetchBlog = async () => {
     try {
