@@ -1,5 +1,7 @@
 import React from "react";
 import "./Footer.css";
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   return (
@@ -23,10 +25,10 @@ const Footer = () => {
         <div className="footer-social">
           <h3>Follow Us</h3>
           <div className="social-icons">
-            <span>📘</span>
-            <span>📷</span>
-            <span>🐦</span>
-            <span>💼</span>
+            <FaFacebookF size={20} />
+            <FaInstagram size={20} />
+            <FaXTwitter size={20} />
+            <FaLinkedinIn size={20} />
           </div>
         </div>
       </div>

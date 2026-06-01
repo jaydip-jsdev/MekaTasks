@@ -6,11 +6,13 @@ import "./add.css";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
+import ClientRoutes from "../ClientRoutes";
+import { AddNewBlog } from "@/services/api";
 
 const AddBlogPage = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -18,39 +20,27 @@ const AddBlogPage = () => {
 
     if (!title || !description || !content) {
       alert("All fields are required");
-      console.log({ title, description, content });
       return;
     }
 
     try {
       const payload = { title, description, content };
 
-      const response = await fetch("/api/blog/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(payload),
-      });
+      const response = await AddNewBlog(payload);
 
       if (response.status === 401) {
-        window.location.href = "/login";
+        window.location.href = ClientRoutes.LOGINPAGE;
         return;
       }
 
-      const data = await response.json();
+      alert("Blog created successfull");
 
-      if (data.success) {
-        alert("Blog created successfull");
-        setTitle("");
-        setDescription("");
-        setContent("");
-        router.push("/profile");
-      } else {
-        alert(data.message);
-      }
-    } catch (error) {
+      setTitle("");
+      setDescription("");
+      setContent("");
+
+      router.push(ClientRoutes.PROFILE);
+    } catch (error: unknown) {
       console.log(error);
       alert("Something went wrong");
     }

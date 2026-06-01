@@ -1,22 +1,36 @@
-import React from "react";
-import "./Featured.css";
-import { getAllBlogs } from "@/utils/getBlogs";
+"use client";
 
-const Featured = async () => {
-  const blogs = await getAllBlogs();
+import React, { useEffect, useState } from "react";
+import "./Featured.css";
+import Card from "../Card/Card";
+import { Blog } from "@/Types/Blog";
+import { GetAllBlogs } from "@/services/api";
+
+const Featured = () => {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+
+  const GetFeaturedBlogs = async () => {
+    try {
+      const response = await GetAllBlogs();
+      const data = response.data.data;
+      if (data) setBlogs(data);
+    } catch (error: unknown) {
+      console.log("Something went wrong" + error);
+    }
+  };
+
+  useEffect(() => {
+    GetFeaturedBlogs();
+  }, []);
 
   return (
     <section className="featured">
       <p className="featured-title">Featured Blogs</p>
       <div className="blogs">
-        {blogs?.slice(0, 3).map((b: any) => {
+        {blogs.slice(0, 3).map((b: Blog) => {
           return (
-            <div className="card" key={b._id}>
-              <img src="/blog.webp" className="blog-cover" alt="cover" />
-              <div className="card-body">
-                <h3 className="card-title">{b.title}</h3>
-                <p className="card-description">{b.description}</p>
-              </div>
+            <div key={b._id}>
+              <Card id={b._id} title={b.title} desc={b.description} />
             </div>
           );
         })}

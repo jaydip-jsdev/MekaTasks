@@ -9,7 +9,7 @@ import CTA from "./components/CTA/CTA";
 
 const HomePage = () => {
   return (
-    <div className="">
+    <div>
       <Navbar />
       <Container>
         <Hero />

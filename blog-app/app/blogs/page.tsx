@@ -4,29 +4,16 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Card from "../components/Card/Card";
 import "./Blogs.css";
-import Link from "next/link";
 import Footer from "../components/Footer/Footer";
-
-type Blog = {
-  _id: string;
-  title: string;
-  description: string;
-};
+import { Blog } from "@/Types/Blog";
+import { GetAllBlogs } from "@/services/api";
 
 const BlogsPage = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
-  const getAllBlogs = async () => {
-    try {
-      const response = await fetch("/api/blog", {
-        method: "GET",
-        cache: "no-store",
-      });
 
-      const data = await response.json();
-      setBlogs(data.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const getAllBlogs = async () => {
+    const response = await GetAllBlogs();
+    setBlogs(response.data.data);
   };
 
   useEffect(() => {
@@ -42,10 +29,13 @@ const BlogsPage = () => {
         </div>
         <div className="card-container">
           {blogs.length > 0 ? (
-            blogs.map((b) => (
-              <Link href={"/blogs/" + b._id} key={b._id}>
-                <Card title={b.title} desc={b.description} />
-              </Link>
+            blogs?.map((b) => (
+              <Card
+                key={b._id}
+                id={b._id}
+                title={b.title}
+                desc={b.description}
+              />
             ))
           ) : (
             <p>no blogs found</p>

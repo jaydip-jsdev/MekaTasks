@@ -6,35 +6,16 @@ import Link from "next/link";
 import Navbar from "../components/Navbar/Navbar";
 import { useRouter } from "next/navigation";
 import Footer from "../components/Footer/Footer";
-
-type Blog = {
-  _id: string;
-  title: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-};
+import { Blog } from "@/Types/Blog";
+import { DeleteBlog, GetMyBlogs, Logout } from "@/services/api";
 
 const ProfilePage = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const router = useRouter();
 
-  const sanitizeHTML = (html: string) => {
-    if (typeof window === "undefined") return html;
-
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-    return doc.body.innerHTML;
-  };
-
   const getMyBlogs = async () => {
     try {
-      const response = await fetch("/api/blog/my", {
-        method: "GET",
-        credentials: "include",
-      });
-
-      const data = await response.json();
+      const { data } = await GetMyBlogs();
       setBlogs(data.data);
     } catch (error) {
       console.log(error);
@@ -47,15 +28,7 @@ const ProfilePage = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("/api/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-
-      const data = await response.json();
+      const { data } = await Logout();
 
       if (data.success) {
         router.push("/login");
@@ -67,11 +40,7 @@ const ProfilePage = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await fetch("/api/blog/delete/" + id, {
-        method: "DELETE",
-        credentials: "include",
-      });
-
+      const { data } = await DeleteBlog(id);
       getMyBlogs();
     } catch (error) {
       console.log(error);

@@ -6,6 +6,7 @@ import Tiptap from "@/app/components/TextEditor/TextEditor";
 import "../../add/add.css";
 import Navbar from "@/app/components/Navbar/Navbar";
 import Footer from "@/app/components/Footer/Footer";
+import { GetBlogById, UpdateBlog } from "@/services/api";
 
 const EditBlog = () => {
   const { id } = useParams();
@@ -15,27 +16,24 @@ const EditBlog = () => {
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
 
-  useEffect(() => {
-    const fetchBlog = async () => {
-      try {
-        const response = await fetch(`/api/blog/${id}`, {
-          credentials: "include",
-        });
+  const fetchBlog = async () => {
+    try {
+      const response = await GetBlogById(id as string);
+      const data = response.data;
 
-        const data = await response.json();
-
-        if (data.success) {
-          setTitle(data.data.title);
-          setDescription(data.data.description);
-          setContent(data.data.content);
-        } else {
-          alert(data.message);
-        }
-      } catch (error) {
-        console.log(error);
+      if (data.success) {
+        setTitle(data.data.title);
+        setDescription(data.data.description);
+        setContent(data.data.content);
+      } else {
+        alert(data.message);
       }
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
     if (id) fetchBlog();
   }, [id]);
 
@@ -54,27 +52,19 @@ const EditBlog = () => {
         content,
       };
 
-      const response = await fetch(`/api/blog/edit/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(payload),
-      });
-
-      if (response.status === 401) {
-        router.push("/login");
-        return;
-      }
-
-      const data = await response.json();
+      const response = await UpdateBlog(id as string, payload);
+      const data = response.data;
 
       if (data.success) {
         alert("Blog updated successfully");
         router.push("/profile");
       } else {
         alert(data.message);
+      }
+
+      if (response.status === 401) {
+        router.push("/login");
+        return;
       }
     } catch (error) {
       console.log(error);

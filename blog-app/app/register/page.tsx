@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import "../login/login.css";
 import { useRouter } from "next/navigation";
+import { Register } from "@/services/api";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -15,18 +16,12 @@ const RegisterPage = () => {
     try {
       e.preventDefault();
 
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-        }),
-      });
-      const data = await response.json();
+      const payload = {
+        name,
+        email,
+        password,
+      };
+      const { data } = await Register(payload);
       if (data.success) {
         router.push("/login");
       } else {

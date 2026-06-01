@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import "./Hero.css";
 import Link from "next/link";
+import ClientRoutes from "@/app/ClientRoutes";
 
 const Hero = () => {
   return (
@@ -10,10 +11,10 @@ const Hero = () => {
         <p className="hero-title">Stories That inspire.</p>
         <p className="hero-title">Knowledge that empowers</p>
         <div className="hero-actions">
-          <Link href={"/blogs"}>
+          <Link href={ClientRoutes.BLOGS}>
             <button>Explore</button>
           </Link>
-          <Link href={"/add"}>
+          <Link href={ClientRoutes.ADD}>
             <button>Add</button>
           </Link>
         </div>

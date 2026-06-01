@@ -5,18 +5,18 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import "./blogDetails.css";
 import Footer from "@/app/components/Footer/Footer";
+import { Blog } from "@/Types/Blog";
+import { GetBlogById } from "@/services/api";
 
 const BlogDetailPage = () => {
   const params = useParams();
   const id = params.id;
 
-  const [blog, setBlog] = useState<any>(null);
+  const [blog, setBlog] = useState<Blog | null>(null);
 
   const getBlogDetails = async () => {
     try {
-      const response = await fetch(`/api/blog/${id}`);
-
-      const data = await response.json();
+      const { data } = await GetBlogById(id as string);
 
       if (data.success) {
         setBlog(data.data);

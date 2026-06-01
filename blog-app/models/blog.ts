@@ -1,18 +1,7 @@
+import IBlog from "@/Types/Blog.model";
 import mongoose, { Schema, Document } from "mongoose";
 
-interface IBlogs extends Document {
-  title: string;
-  description: string;
-  content: string;
-  author: mongoose.Types.ObjectId;
-  thumbnail: string;
-  images: string[];
-  category: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
-const BlogSchema = new Schema<IBlogs>(
+const BlogSchema = new Schema<IBlog>(
   {
     title: {
       type: String,
@@ -47,4 +36,4 @@ const BlogSchema = new Schema<IBlogs>(
 );
 
 export default mongoose.models.Blogs ||
-  mongoose.model<IBlogs>("Blogs", BlogSchema);
+  mongoose.model<IBlog>("Blogs", BlogSchema);

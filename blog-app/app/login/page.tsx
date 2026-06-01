@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import "./login.css";
 import { useRouter } from "next/navigation";
+import { Login } from "@/services/api";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -14,17 +15,13 @@ const LoginPage = () => {
     try {
       e.preventDefault();
 
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-      const data = await response.json();
+      const payload = {
+        email,
+        password,
+      };
+
+      const { data } = await Login(payload);
+
       if (data.success) {
         router.push("/");
       }

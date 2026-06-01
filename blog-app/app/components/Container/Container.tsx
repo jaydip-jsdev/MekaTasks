@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import "./Container.css";
 
-const Container = ({ children }: any) => {
+const Container = ({ children }: { children: ReactNode }) => {
   return <div className="container">{children}</div>;
 };
 
