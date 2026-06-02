@@ -7,9 +7,7 @@ export async function GET() {
   try {
     await ConnectDB();
 
-    const courses = await CourseModel.find({
-      isPublished: true,
-    })
+    const courses = await CourseModel.find({})
       .populate("category")
       .lean();
 

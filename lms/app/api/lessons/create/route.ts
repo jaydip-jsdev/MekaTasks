@@ -11,7 +11,6 @@ export async function POST(req: NextRequest) {
   try {
     await ConnectDB();
     const formData = await req.formData();
-    console.log(mongoose.modelNames());
 
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
