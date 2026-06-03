@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import Link from "next/link";
 import routes from "@/lib/ClientRoutes/route";
+import Link from "next/link";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -30,6 +30,13 @@ export default function Navbar() {
           </Link>
         </li>
         <li>Categories</li>
+        <li>
+          <div className={`auth-section`}>
+            <Link href={routes.LOGINPAGE}>
+              <button>Login</button>
+            </Link>
+          </div>
+        </li>
       </ul>
     </nav>
   );

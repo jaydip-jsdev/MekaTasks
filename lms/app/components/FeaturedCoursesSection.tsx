@@ -1,8 +1,31 @@
+"use client";
+
+import { GetCourses } from "@/lib/axios/api";
 import styles from "../page.module.css";
 import Card from "./card/Card";
-import { featuredCoursesData } from "@/lib/constants/featuredCoursesData";
+import { useEffect, useState } from "react";
+
+interface ApiResponse {
+  _id: string;
+  title: string;
+  category: string;
+  slug: string;
+  description: string;
+  image: string;
+}
 
 export default function FeaturedCoursesSection() {
+  const [featured, setFeatured] = useState<ApiResponse[]>([]);
+  const featuredCourses = async () => {
+    const response = await GetCourses();
+    const featured = response.data.data.slice(0, 6);
+    setFeatured(featured);
+  };
+
+  useEffect(() => {
+    featuredCourses();
+  }, []);
+
   return (
     <div className={`${"wrapper"} ${styles.featured}`}>
       <h2 className={styles.featuredTitle}>Featured Courses</h2>
@@ -11,12 +34,14 @@ export default function FeaturedCoursesSection() {
       </p>
       <div>
         <div className={styles.cardContainer}>
-          {featuredCoursesData.map((course) => (
+          {featured.map((course) => (
             <Card
-              key={course.id}
+              key={course._id}
               title={course.title}
+              category={course.category}
+              slug={course.slug}
               description={course.description}
-              image={course.image}
+              image={course.image || "/course.webp"}
             />
           ))}
         </div>

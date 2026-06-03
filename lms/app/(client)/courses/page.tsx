@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Card from "../components/card/Card";
 import styles from "./coursepage.module.css";
 import { GetCourses } from "@/lib/axios/api";
+import Card from "@/app/components/card/Card";
 
 interface ApiResponse {
   _id: string;
@@ -76,3 +76,4 @@ const CoursesPage = () => {
 };
 
 export default CoursesPage;
+

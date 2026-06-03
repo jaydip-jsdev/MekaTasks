@@ -3,7 +3,7 @@ import { ApiError, ApiSuccess } from "@/lib/api-response";
 import ConnectDB from "@/lib/db";
 import { GenerateToken } from "@/lib/jwt";
 import bcrypt from "bcryptjs";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 interface UserBody {
   email: string;
@@ -31,10 +31,24 @@ export async function POST(req: NextRequest) {
     const userData = user.toObject();
     delete userData.password;
 
-    return ApiSuccess("User Logged in Successfull", {
-      token,
-      user: userData,
+    const response = NextResponse.json(
+      {
+        success: true,
+        message: "User Logged in Successfully",
+        user: userData,
+      },
+      { status: 200 },
+    );
+
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, 
     });
+
+    return response;
   } catch (error) {
     console.error(error);
 

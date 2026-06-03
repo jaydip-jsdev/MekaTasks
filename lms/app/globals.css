@@ -1,3 +1,14 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -134,4 +145,143 @@
   .menu li:hover {
     background-color: #f0f0f0;
   }
+}
+
+.login-form {
+  width: 100vw;
+  height: 100vh;
+  background-color: aliceblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-form input {
+  width: 20vw;
+  height: 4vh;
+  display: block;
+  border-radius: 0.5rem;
+  outline: none;
+  margin-top: 4px;
+  margin-bottom: 1rem;
+}
+
+.form-header {
+  text-align: center;
+  padding-bottom: 3rem;
+}
+
+.form-action {
+  text-align: center;
+}
+
+.form {
+  background-color: white;
+  padding: 4rem;
+  border-radius: 1rem;
+  box-shadow:
+    rgba(0, 0, 0, 0.09) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px,
+    rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px,
+    rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.form-action button {
+  background-color: dodgerblue;
+  color: white;
+  width: 10vw;
+  height: 4vh;
+  border: none;
+  border-radius: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.auth-section button {
+  width: 150px;
+  height: 4vh;
+  background-color: dodgerblue;
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+}
+
+.modal form {
+  position: relative;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal form input,
+select {
+  display: block;
+  width: 100%;
+  height: 4vh;
+  border-radius: 0.5rem;
+  padding-left: 0.4rem;
+  margin-top: 0.3rem;
+}
+
+.modal-action {
+  text-align: center;
+}
+
+.modal-action button {
+  background-color: dodgerblue;
+  color: white;
+  width: 20%;
+  height: 4vh;
+  border: none;
+  color: #f0f0f0;
+  font-weight: 800;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 35px;
+  height: 35px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #f1f5f9;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  font-weight: bold;
 }

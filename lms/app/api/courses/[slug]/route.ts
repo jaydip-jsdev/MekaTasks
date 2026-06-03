@@ -9,14 +9,14 @@ import { AdminAuth } from "@/lib/adminAuth";
 export async function GET(
   req: NextRequest,
   context: {
-    params: Promise<{ id: string }>;
+    params: Promise<{ slug: string }>;
   },
 ) {
   try {
     await ConnectDB();
-    const { id } = await context.params;
+    const { slug } = await context.params;
 
-    let course = await CourseModel.findById(id).populate("lessons");
+    let course = await CourseModel.findOne({ slug }).populate("lessons");
 
     if (!course) {
       return ApiError("Course not found", 404);
@@ -32,7 +32,7 @@ export async function GET(
 export async function PATCH(
   req: NextRequest,
   context: {
-    params: { id: string };
+    params: { slug: string };
   },
 ) {
   try {
@@ -43,13 +43,13 @@ export async function PATCH(
     if (!auth.success)
       return ApiError(auth.message || "Admin Access required", 501);
 
-    const { id } = await context.params;
+    const { slug } = await context.params;
 
-    if (!id) {
+    if (!slug) {
       return ApiError("Id is required", 401);
     }
 
-    const { title, slug, description, categoryId } = await req.json();
+    const { title, description, categoryId } = await req.json();
 
     if (categoryId) {
       const categoryExist = await CategoriesModel.findById(categoryId);
@@ -57,11 +57,10 @@ export async function PATCH(
       if (!categoryExist) return ApiError("Category not found", 401);
     }
 
-    const updatedCourse = await CourseModel.findByIdAndUpdate(
-      id,
+    const updatedCourse = await CourseModel.findOneAndUpdate(
+      { slug },
       {
         title,
-        slug,
         description,
         category: categoryId,
       },
@@ -84,7 +83,7 @@ export async function PATCH(
 export async function DELETE(
   req: NextRequest,
   context: {
-    params: { id: string };
+    params: { slug: string };
   },
 ) {
   try {
@@ -92,9 +91,9 @@ export async function DELETE(
     const auth = AdminAuth(req);
     if (!auth.success) return ApiError("Admin Access required", 501);
 
-    const { id } = await context.params;
+    const { slug } = await context.params;
 
-    const course = await CourseModel.findByIdAndDelete(id);
+    const course = await CourseModel.findOneAndDelete({ slug });
 
     if (!course) return ApiError("Course not found", 404);
 

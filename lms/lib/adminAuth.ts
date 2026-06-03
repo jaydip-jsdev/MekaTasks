@@ -3,7 +3,11 @@ import { VerifyToken } from "./jwt";
 
 export const AdminAuth = (req: NextRequest) => {
   try {
-    const token = req.headers.get("authorization")?.split(" ")[1];
+    const authHeader = req.headers.get("authorization");
+    const bearerToken = authHeader?.startsWith("Bearer ")
+      ? authHeader.split(" ")[1]
+      : undefined;
+    const token = bearerToken || req.cookies.get("token")?.value;
 
     if (!token) {
       return {
