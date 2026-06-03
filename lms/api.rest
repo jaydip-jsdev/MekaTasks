@@ -30,7 +30,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMWQ1OTI4N
 ### create course
 POST http://localhost:3000/api/courses/create
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMWQ1OTI4NWM3YmVjZWVlMjI0ZWNiNCIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgwMzgxODQ2LCJleHAiOjE3ODAzODU0NDZ9.xRwaVfusyVhyl21ws5elot2nd7crfeq7S6uD8kcgtb8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMWQ1OTI4NWM3YmVjZWVlMjI0ZWNiNCIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgwNDA2MDAyLCJleHAiOjE3ODA0MDk2MDJ9.Ogr9VN_7ue2dXADq3-Ekfv2IvAdiU1yG8ZWsxusAhJY
 
 {
     "title" : "MEka Training",

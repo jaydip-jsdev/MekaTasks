@@ -1,10 +1,17 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import HeroSection from "./components/HeroSection";
+import FeaturedCoursesSection from "./components/FeaturedCoursesSection";
+import CategoriesSection from "./components/CategoriesSection";
+import StatsSection from "./components/StatsSection";
+import WhyChooseUsSection from "./components/WhyChooseUsSection";
 
 export default function Home() {
   return (
-    <div>
-      <h1>Learning Managemnt System</h1>
-    </div>
+    <>
+      <HeroSection />
+      <FeaturedCoursesSection />
+      <CategoriesSection />
+      <StatsSection />
+      <WhyChooseUsSection />
+    </>
   );
 }
