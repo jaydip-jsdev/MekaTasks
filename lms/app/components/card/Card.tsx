@@ -47,9 +47,15 @@ const Card = ({
           <span>{category?.name}</span>
         </div>
         <p className={styles.cardDesc}>{description.slice(0, 60)}...</p>
-        <Link href={isAuthenticated ? "/courses/" + slug : "/login"}>
-          <button className={styles.viewBtn}>View</button> 
-        </Link>
+        {isAdmin ? (
+          <Link href={isAuthenticated ? "courses/" + slug : "/login"}>
+            <button className={styles.viewBtn}>View</button>
+          </Link>
+        ) : (
+          <Link href={isAuthenticated ? "/courses/" + slug : "/login"}>
+            <button className={styles.viewBtn}>View</button>
+          </Link>
+        )}
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ export const logout = () => {
   return axiosInstance.post("logout");
 };
 
-export const GetCourses = (catId: string) => {
+export const GetCourses = (catId?: string) => {
   let endpoint = catId ? `courses?categoryId=${catId}` : "courses";
   return axiosInstance.get(endpoint);
 };
