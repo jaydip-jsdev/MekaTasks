@@ -7,6 +7,8 @@ import "../../add/add.css";
 import Navbar from "@/app/components/Navbar/Navbar";
 import Footer from "@/app/components/Footer/Footer";
 import { GetBlogById, UpdateBlog } from "@/services/api";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/lib/ErrorMessage";
 
 const EditBlog = () => {
   const { id } = useParams();
@@ -67,8 +69,8 @@ const EditBlog = () => {
         return;
       }
     } catch (error) {
+      toast.error(getErrorMessage(error));
       console.log(error);
-      alert("Something went wrong");
     }
   };
 

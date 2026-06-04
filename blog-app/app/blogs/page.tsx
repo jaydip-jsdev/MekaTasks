@@ -7,13 +7,19 @@ import "./Blogs.css";
 import Footer from "../components/Footer/Footer";
 import { Blog } from "@/Types/Blog";
 import { GetAllBlogs } from "@/services/api";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/lib/ErrorMessage";
 
 const BlogsPage = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
 
   const getAllBlogs = async () => {
-    const response = await GetAllBlogs();
-    setBlogs(response.data.data);
+    try {
+      const response = await GetAllBlogs();
+      setBlogs(response.data.data);
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    }
   };
 
   useEffect(() => {

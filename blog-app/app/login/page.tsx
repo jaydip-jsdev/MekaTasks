@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import "./login.css";
 import { useRouter } from "next/navigation";
 import { Login } from "@/services/api";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/lib/ErrorMessage";
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -24,8 +26,11 @@ const LoginPage = () => {
 
       if (data.success) {
         router.push("/");
+      } else {
+        toast.error(data.message || "Login failed");
       }
     } catch (error) {
+      toast.error(getErrorMessage(error));
       console.log(error);
     }
   };

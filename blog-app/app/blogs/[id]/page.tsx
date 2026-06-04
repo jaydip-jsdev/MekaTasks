@@ -7,6 +7,8 @@ import "./blogDetails.css";
 import Footer from "@/app/components/Footer/Footer";
 import { Blog } from "@/Types/Blog";
 import { GetBlogById } from "@/services/api";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/lib/ErrorMessage";
 
 const BlogDetailPage = () => {
   const params = useParams();
@@ -22,6 +24,7 @@ const BlogDetailPage = () => {
         setBlog(data.data);
       }
     } catch (error) {
+      toast.error(getErrorMessage(error));
       console.log(error);
     }
   };

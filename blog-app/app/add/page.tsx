@@ -8,6 +8,8 @@ import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import ClientRoutes from "../ClientRoutes";
 import { AddNewBlog } from "@/services/api";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/lib/ErrorMessage";
 
 const AddBlogPage = () => {
   const [title, setTitle] = useState<string>("");
@@ -19,7 +21,7 @@ const AddBlogPage = () => {
     e.preventDefault();
 
     if (!title || !description || !content) {
-      alert("All fields are required");
+      toast.error("all fields required");
       return;
     }
 
@@ -33,18 +35,17 @@ const AddBlogPage = () => {
         return;
       }
 
-      alert("Blog created successfull");
-
       setTitle("");
       setDescription("");
       setContent("");
 
       router.push(ClientRoutes.PROFILE);
     } catch (error: unknown) {
+      toast.error(getErrorMessage(error));
       console.log(error);
-      alert("Something went wrong");
     }
   };
+
   return (
     <div>
       <Navbar />

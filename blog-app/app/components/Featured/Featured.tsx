@@ -5,6 +5,8 @@ import "./Featured.css";
 import Card from "../Card/Card";
 import { Blog } from "@/Types/Blog";
 import { GetAllBlogs } from "@/services/api";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/lib/ErrorMessage";
 
 const Featured = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -15,6 +17,7 @@ const Featured = () => {
       const data = response.data.data;
       if (data) setBlogs(data);
     } catch (error: unknown) {
+      toast.error(getErrorMessage(error));
       console.log("Something went wrong" + error);
     }
   };
