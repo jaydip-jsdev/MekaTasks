@@ -19,7 +19,7 @@
   list-style: none;
 }
 
-.lessonsList li {
+.lesson {
   background-color: red;
   margin-top: 1rem;
   width: 18vw;
@@ -29,4 +29,18 @@
   align-items: center;
   justify-content: center;
   border-radius: 1rem;
+  cursor: pointer;
+}
+
+.active {
+  background-color: green;
+}
+
+.noLessons {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: red;
+  font-size: 24px;
 }

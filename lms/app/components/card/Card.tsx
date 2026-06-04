@@ -12,6 +12,8 @@ interface CardProps {
   isAdmin?: boolean;
   onEdit?: () => void;
   onDelete?: () => void;
+  isAuthenticated?: boolean;
+  fromCats?: boolean;
 }
 
 const Card = ({
@@ -23,6 +25,8 @@ const Card = ({
   isAdmin = false,
   onEdit,
   onDelete,
+  isAuthenticated = true,
+  fromCats = false,
 }: CardProps) => {
   return (
     <div className={styles.card}>
@@ -39,12 +43,12 @@ const Card = ({
       )}
       <div className={styles.cardBody}>
         <div className={styles.cardHead}>
-          <h3 className={styles.cardTitle}>{title}</h3>
+          <h3 className={styles.cardTitle}>{title.slice(0, 15)}</h3>
           <span>{category?.name}</span>
         </div>
-        <p className={styles.cardDesc}>{description}</p>
-        <Link href={"courses/" + slug}>
-          <button className={styles.viewBtn}>View</button>
+        <p className={styles.cardDesc}>{description.slice(0, 60)}...</p>
+        <Link href={isAuthenticated ? "/courses/" + slug : "/login"}>
+          <button className={styles.viewBtn}>View</button> 
         </Link>
       </div>
     </div>

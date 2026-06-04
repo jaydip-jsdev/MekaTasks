@@ -1,55 +1,64 @@
 "use client";
 
-import { login } from "@/lib/axios/api";
+import { register } from "@/lib/axios/api";
 import { getErrorMessage } from "@/lib/ClientError";
 import routes from "@/lib/ClientRoutes/route";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const router = useRouter();
 
+  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const HandleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const payload = {
+      name,
       email,
       password,
     };
 
     try {
-      const response = await login(payload);
-      const user = response.data.user;
+      const response = await register(payload);
 
-      if (response.status === 200) {
-        if (user.role === "admin") {
-          router.push(routes.ADMIN_DASHBOARD);
-        } else {
-          router.push(routes.HOMEPAGE);
-        }
+      if (response.status === 201) {
+        router.push(routes.LOGINPAGE);
       }
     } catch (error) {
       toast.error(getErrorMessage(error));
     }
   };
+
   return (
     <div>
-      <form className="login-form" onSubmit={handleLogin}>
+      <form className="login-form" onSubmit={HandleRegister}>
         <div className="form">
           <div className="form-header">
-            <h1 className="login-title">Login Page</h1>
+            <h1 className="login-title">Register Page</h1>
           </div>
           <div className="form-body">
+            <div>
+              <label htmlFor="">Name:</label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
             <div>
               <label htmlFor="">Email:</label>
               <input
                 type="email"
                 name="email"
+                value={email}
                 id="email"
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -59,18 +68,14 @@ const LoginPage = () => {
               <input
                 type="password"
                 name="password"
+                value={password}
                 id="password"
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="no-account">
-              <span>
-                Don't have a account?{" "}
-                <Link href={"/register"}>Register</Link>{" "}
-              </span>
-            </div>
+
             <div className="form-action">
-              <button>Login</button>
+              <button>Register</button>
             </div>
           </div>
         </div>
@@ -79,4 +84,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

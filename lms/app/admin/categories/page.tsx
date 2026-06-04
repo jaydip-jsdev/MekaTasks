@@ -1,9 +1,10 @@
 "use client";
 
-import { GetCategories } from "@/lib/axios/api";
+import { DeleteCategories, GetCategories } from "@/lib/axios/api";
 import React, { useEffect, useState } from "react";
 import AddCategoryModel from "./AddCategoryModel";
 import styles from "./style.module.css";
+import { Trash2 } from "lucide-react";
 
 interface category {
   _id: string;
@@ -20,6 +21,17 @@ const CategoriesPage = () => {
     setCategories(response.data.data);
   };
 
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await DeleteCategories(id);
+      if (response.status === 200) {
+        fetchCategoreis();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchCategoreis();
   }, []);
@@ -29,13 +41,24 @@ const CategoriesPage = () => {
         <button onClick={() => setIsAddingCategory(true)}>Add Category</button>
       </div>
       <div className={styles["card-container"]}>
-        {categories.map((c, i) => {
-          return (
-            <div className={styles["category-card"]}>
+        {categories.length < 1 ? (
+          <div className={styles.notFound}>
+            <p>Categories not found</p>
+          </div>
+        ) : (
+          categories.map((c) => (
+            <div key={c._id} className={styles["category-card"]}>
+              <button
+                onClick={() => handleDelete(c._id)}
+                className={styles.deleteBtn}
+              >
+                <Trash2 color="red" />
+              </button>
+
               <h3>{c.name}</h3>
             </div>
-          );
-        })}
+          ))
+        )}
       </div>
       {isAddingCategory && (
         <AddCategoryModel

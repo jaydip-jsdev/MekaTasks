@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./coursepage.module.css";
 import { GetCourses } from "@/lib/axios/api";
 import Card from "@/app/components/card/Card";
+import isAuthenticated from "@/lib/CheckAuth/auth";
 
 interface ApiResponse {
   _id: string;
@@ -21,6 +22,7 @@ const CoursesPage = () => {
   const [courses, setCourses] = useState<ApiResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState("");
+  const [authenticated, setAuthenticated] = useState(false);
 
   const fetchCourses = async () => {
     try {
@@ -38,6 +40,15 @@ const CoursesPage = () => {
       setLoading(false);
     }
   };
+
+  const checkAuthentication = async () => {
+    const auth = await isAuthenticated();
+    setAuthenticated(auth);
+  };
+
+  useEffect(() => {
+    checkAuthentication();
+  }, []);
 
   useEffect(() => {
     fetchCourses();
@@ -64,6 +75,7 @@ const CoursesPage = () => {
                 description={c.description}
                 category={c.category}
                 image="/course.webp"
+                isAuthenticated={authenticated}
               />
             );
           })
@@ -76,4 +88,3 @@ const CoursesPage = () => {
 };
 
 export default CoursesPage;
-

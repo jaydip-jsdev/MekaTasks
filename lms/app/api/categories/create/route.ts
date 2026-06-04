@@ -26,8 +26,10 @@ export async function POST(req: NextRequest) {
 
     const category = name.toLocaleLowerCase();
     const exist = await CategoriesModel.findOne({ name: category });
+    const slugExist = await CategoriesModel.findOne({ slug });
 
     if (exist) return ApiError("this category already exist");
+    if (slugExist) return ApiError("This slug already exist");
 
     const NewCategory = {
       name,

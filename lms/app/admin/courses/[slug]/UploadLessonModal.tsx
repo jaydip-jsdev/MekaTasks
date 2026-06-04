@@ -1,10 +1,14 @@
 import {
   AddCourse,
+  EditLesson,
   GetCategories,
   GetCourses,
+  GetLessonById,
   UploadLesson,
 } from "@/lib/axios/api";
+import { getErrorMessage } from "@/lib/ClientError";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 interface categories {
   _id: string;
@@ -15,18 +19,23 @@ interface UploadLessonModalProps {
   setAddingLesson: React.Dispatch<React.SetStateAction<boolean>>;
   fetchLessons: () => Promise<void>;
   courseId: string;
+  editingId: string;
+  setEditingId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const UploadLessonModal = ({
   setAddingLesson,
   fetchLessons,
   courseId,
+  editingId,
+  setEditingId,
 }: UploadLessonModalProps) => {
   const [lessonData, setLessonData] = useState({
     title: "",
     description: "",
     slug: "",
     lesson: null as File | null,
+    lessonUrl: "",
     courseId: "",
   });
 
@@ -52,30 +61,61 @@ const UploadLessonModal = ({
       formData.append("slug", lessonData.slug);
       formData.append("courseId", courseId);
       if (!lessonData.lesson) {
-        alert("Please select a file");
+        toast.warn("Please select a file");
         return;
       }
 
       formData.append("lesson", lessonData.lesson);
 
-      const response = await UploadLesson(formData);
+      let response;
+      if (editingId) {
+        response = await EditLesson(editingId, formData);
+      } else {
+        response = await UploadLesson(formData);
+      }
+
       if (response.status === 200) {
         await fetchLessons();
+        setEditingId("");
         setAddingLesson(false);
+      }
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    }
+  };
+
+  const handleClose = () => {
+    setAddingLesson(false);
+    setEditingId("");
+  };
+
+  const fetchLessonById = async () => {
+    try {
+      const response = await GetLessonById(editingId);
+      const lesson = response.data.data;
+      if (response.status === 200) {
+        setLessonData((prev) => ({
+          ...prev,
+          title: lesson.title,
+          description: lesson.description,
+          slug: lesson.slug,
+          lessonUrl: lesson.lesson,
+          courseId: lesson.courseId,
+        }));
       }
     } catch (error) {
       console.log(error);
     }
   };
 
+  useEffect(() => {
+    if (editingId) fetchLessonById();
+  }, [editingId]);
+
   return (
     <div className="modal">
       <form onSubmit={handleSubmit}>
-        <button
-          type="button"
-          className="close-btn"
-          onClick={() => setAddingLesson(false)}
-        >
+        <button type="button" className="close-btn" onClick={handleClose}>
           ✕
         </button>{" "}
         <div>
@@ -85,6 +125,7 @@ const UploadLessonModal = ({
             name="title"
             placeholder="Enter Lesson Title"
             onChange={(e) => handleInputChange(e)}
+            value={lessonData.title}
           />
         </div>
         <div>
@@ -94,6 +135,7 @@ const UploadLessonModal = ({
             name="description"
             placeholder="Enter Lesson Description"
             onChange={(e) => handleInputChange(e)}
+            value={lessonData.description}
           />
         </div>
         <div>
@@ -103,6 +145,7 @@ const UploadLessonModal = ({
             name="slug"
             placeholder="Enter slug for SEO"
             onChange={(e) => handleInputChange(e)}
+            value={lessonData.slug}
           />
         </div>
         <div>
@@ -121,7 +164,7 @@ const UploadLessonModal = ({
           />
         </div>
         <div className="modal-action">
-          <button>Publish</button>
+          <button> {editingId ? "Update" : "Publish"}</button>
         </div>
       </form>
     </div>

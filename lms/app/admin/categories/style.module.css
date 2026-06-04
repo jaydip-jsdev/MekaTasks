@@ -22,6 +22,7 @@
 }
 
 .category-card {
+  position: relative;
   width: 25vw;
   background-color: antiquewhite;
   height: 20vh;
@@ -30,4 +31,24 @@
   justify-content: center;
   border-radius: 1rem;
   border: 1px solid dodgerblue;
+}
+
+.deleteBtn {
+  position: absolute;
+  top: 8;
+  right: 10;
+  color: white;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.notFound {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 24px;
+  color: red;
 }

@@ -1,15 +1,15 @@
 import CourseModel from "@/app/models/CourseModel";
-import "@/app/models/CategoriesModel"; // Register Category model for populate
+import "@/app/models/CategoriesModel"; 
 import { ApiError, ApiSuccess } from "@/lib/api-response";
 import ConnectDB from "@/lib/db";
+import { NextRequest } from "next/server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     await ConnectDB();
-
-    const courses = await CourseModel.find({})
-      .populate("category")
-      .lean();
+    const categoryId = req.nextUrl?.searchParams.get("categoryId");
+    const filter = categoryId ? { category: categoryId } : {};
+    const courses = await CourseModel.find(filter).populate("category").lean();
 
     return ApiSuccess("Courses fetched successfully", courses);
   } catch (error) {

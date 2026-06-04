@@ -1,5 +1,7 @@
 import { addCategory } from "@/lib/axios/api";
+import { getErrorMessage } from "@/lib/ClientError";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 interface AddCategoryModalProps {
   setAddingCategory: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +31,7 @@ const AddCategoryModel = ({
         fetchCategories();
       }
     } catch (error) {
-      console.log(error);
+      toast.error(getErrorMessage(error));
     }
   };
 

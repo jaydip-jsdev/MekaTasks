@@ -18,7 +18,7 @@ export default function FeaturedCoursesSection() {
   const [featured, setFeatured] = useState<ApiResponse[]>([]);
   const featuredCourses = async () => {
     const response = await GetCourses();
-    const featured = response.data.data.slice(0, 6);
+    const featured = response.data.data.slice(0, 8);
     setFeatured(featured);
   };
 

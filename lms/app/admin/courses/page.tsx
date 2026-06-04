@@ -50,21 +50,27 @@ const CoursePage = () => {
         <button onClick={() => setAddingCourse(true)}>Add Course</button>
       </div>
       <div className={styles.cardContainer}>
-        {courses.map((c, i) => {
-          return (
-            <Card
-              title={c.title}
-              category={c.category}
-              description={c.description}
-              image="/course.webp"
-              slug={c.slug}
-              isAdmin
-              key={c._id}
-              onEdit={() => handleEditCourse(c.slug)}
-              onDelete={() => handleDelete(c.slug)}
-            />
-          );
-        })}
+        {courses.length < 1 ? (
+          <div className={styles.notFound} >
+            <p>Courses not found</p>
+          </div>
+        ) : (
+          courses.map((c, i) => {
+            return (
+              <Card
+                title={c.title}
+                category={c.category}
+                description={c.description}
+                image="/course.webp"
+                slug={c.slug}
+                isAdmin
+                key={c._id}
+                onEdit={() => handleEditCourse(c.slug)}
+                onDelete={() => handleDelete(c.slug)}
+              />
+            );
+          })
+        )}
       </div>
       {addingCourse && (
         <AddCourseModal

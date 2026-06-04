@@ -33,15 +33,34 @@ const CourseDetailsPage = () => {
   const slug = params?.slug as string;
 
   const [courseDetails, setCourseDetails] = useState<Course | null>(null);
+  const [selectedLesson, setSelectedLesson] = useState(0);
 
-  const GetAllCourses = async () => {
+  const getDetails = async () => {
     const response = await getCourseDetails(slug);
     setCourseDetails(response.data.data);
   };
 
   useEffect(() => {
-    GetAllCourses();
-  }, []);
+    if (slug) {
+      getDetails();
+    }
+  }, [slug]);
+
+  if (!courseDetails) {
+    return (
+      <div className={styles.noLessons}>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (courseDetails?.lessons?.length < 1) {
+    return (
+      <div className={styles.noLessons}>
+        <p>No Lessons Found</p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -50,14 +69,24 @@ const CourseDetailsPage = () => {
           className={styles.video}
           width="560"
           height="315"
-          src={courseDetails?.lessons?.[0]?.video_url}
+          src={courseDetails?.lessons?.[selectedLesson]?.video_url}
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         ></iframe>
         <div className={styles.lessonsContainer}>
           <ul className={styles.lessonsList}>
             {courseDetails?.lessons.map((l, ind) => {
-              return <li>{l.title}</li>;
+              return (
+                <li
+                  key={l._id}
+                  onClick={() => setSelectedLesson(ind)}
+                  className={`${styles.lesson} ${
+                    ind === selectedLesson ? styles.active : ""
+                  }`}
+                >
+                  {l.title}
+                </li>
+              );
             })}
           </ul>
         </div>

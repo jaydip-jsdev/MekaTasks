@@ -11,10 +11,12 @@ const CategorySchema = new Schema<ICategories>(
     name: {
       type: String,
       required: true,
+      unique: true,
     },
     slug: {
       type: String,
       required: true,
+      unique: true,
     },
     icon: {
       type: String,

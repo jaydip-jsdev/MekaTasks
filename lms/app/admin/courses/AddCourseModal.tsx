@@ -4,7 +4,9 @@ import {
   GetCategories,
   getCourseDetails,
 } from "@/lib/axios/api";
+import { getErrorMessage } from "@/lib/ClientError";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 interface categories {
   _id: string;
@@ -88,7 +90,7 @@ const AddCourseModal = ({
         setAddingCourse(false);
       }
     } catch (error) {
-      console.log(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
