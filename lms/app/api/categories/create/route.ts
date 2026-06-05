@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     if (slugExist) return ApiError("This slug already exist");
 
     const NewCategory = {
-      name,
+      name: category,
       slug,
     };
 

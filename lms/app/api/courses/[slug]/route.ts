@@ -49,10 +49,10 @@ export async function PATCH(
       return ApiError("Id is required", 401);
     }
 
-    const { title, description, categoryId } = await req.json();
+    const { title, description, category } = await req.json();
 
-    if (categoryId) {
-      const categoryExist = await CategoriesModel.findById(categoryId);
+    if (category) {
+      const categoryExist = await CategoriesModel.findById(category);
 
       if (!categoryExist) return ApiError("Category not found", 401);
     }
@@ -62,7 +62,7 @@ export async function PATCH(
       {
         title,
         description,
-        category: categoryId,
+        category,
       },
       {
         new: true,

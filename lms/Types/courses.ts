@@ -15,6 +15,7 @@ export interface Course {
   totalLessons?: number;
   enrolledStudents?: number;
   isPublished: boolean;
+  isEnrolled?: boolean;
 
   createdAt?: string;
   updatedAt?: string;

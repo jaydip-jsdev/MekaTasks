@@ -44,3 +44,9 @@
   color: red;
   font-size: 24px;
 }
+
+.video {
+  width: 70%;
+  height: auto;
+  border-radius: 8px;
+}

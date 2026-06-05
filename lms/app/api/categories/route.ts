@@ -6,7 +6,6 @@ import { NextRequest } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     await ConnectDB();
-    ConnectDB();
     const categories = await CategoriesModel.find({});
     return ApiSuccess("Categories fetched successfully", categories);
   } catch (error) {

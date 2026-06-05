@@ -8,7 +8,8 @@ import Card from "@/app/components/card/Card";
 import isAuthenticated from "@/lib/CheckAuth/auth";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "@/lib/ClientError";
-import { Category, Course } from "@/Types/courses";
+import { Course } from "@/Types/courses";
+import { Category } from "@/Types/category";
 
 const CategoryDetaisPage = () => {
   const params = useParams();
@@ -18,52 +19,43 @@ const CategoryDetaisPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [authenticated, setAuthenticated] = useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+  const fetchCourses = async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-        const categorySlug = params?.slug;
-        if (!categorySlug) {
-          setError("Category not found");
-          setLoading(false);
-          return;
-        }
+      const categorySlug = params?.slug;
 
-        const response = await GetCategories();
-        const categoriesResponse = response.data.data;
-        if (response.status !== 200) {
-          throw new Error("Failed to fetch categories");
-        }
-
-        const category = categoriesResponse.find(
-          (cat: Category) => cat.slug === categorySlug,
-        );
-
-        if (!category) {
-          setError("Category not found");
-          setLoading(false);
-          return;
-        }
-
-        setCategoryName(category.name);
-
-        const res = await GetCourses(category._id);
-
-        if (response.status !== 200) {
-          throw new Error("Failed to fetch courses");
-        }
-
-        setCourses(res.data.data || []);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred");
-        console.error(err);
-      } finally {
-        setLoading(false);
+      if (!categorySlug) {
+        setError("Category not found");
+        return;
       }
-    };
 
+      const response = await GetCategories();
+      const categories = response.data.data;
+
+      const category = categories.find(
+        (cat: Category) => cat.slug === categorySlug,
+      );
+
+      if (!category) {
+        setError("Category not found");
+        return;
+      }
+
+      setCategoryName(category.name);
+
+      const res = await GetCourses(category._id);
+
+      setCourses(res.data.data || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchCourses();
   }, [params?.slug]);
 
@@ -75,23 +67,6 @@ const CategoryDetaisPage = () => {
   useEffect(() => {
     checkAuthentication();
   }, []);
-
-  const fetchCourses = async () => {
-    try {
-      setLoading(true);
-      setError("");
-
-      const res = await GetCourses();
-
-      setCourses(res.data.data);
-    } catch (err: any) {
-      setError(
-        err.response?.data?.message || err.message || "Something went wrong",
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleEnroll = async (courseId: string) => {
     try {

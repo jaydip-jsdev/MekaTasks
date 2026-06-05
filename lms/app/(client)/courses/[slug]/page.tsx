@@ -68,14 +68,15 @@ const CourseDetailsPage = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <iframe
+        <video
           className={styles.video}
-          width="560"
-          height="315"
+          controls
+          controlsList="nodownload"
+          preload="metadata"
           src={courseDetails?.lessons?.[selectedLesson]?.video_url}
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        ></iframe>
+        >
+          Your browser does not support the video tag.
+        </video>
         <div className={styles.lessonsContainer}>
           <ul className={styles.lessonsList}>
             {courseDetails?.lessons.map((l, ind) => {

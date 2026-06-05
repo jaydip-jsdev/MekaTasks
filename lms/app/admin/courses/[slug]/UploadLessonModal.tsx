@@ -55,13 +55,15 @@ const UploadLessonModal = ({
       formData.append("description", lessonData.description);
       formData.append("slug", lessonData.slug);
       formData.append("courseId", courseId);
-      if (!lessonData.lesson) {
+
+      if (!editingId && !lessonData.lesson) {
         toast.warn("Please select a file");
         return;
       }
 
-      formData.append("lesson", lessonData.lesson);
-
+      if (lessonData.lesson) {
+        formData.append("lesson", lessonData.lesson);
+      }
       let response;
       if (editingId) {
         response = await EditLesson(editingId, formData);

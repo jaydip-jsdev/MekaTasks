@@ -34,6 +34,7 @@ export const AdminAuth = (req: NextRequest) => {
     return {
       success: true,
       user: decoded,
+      status: 200,
     };
   } catch {
     return {

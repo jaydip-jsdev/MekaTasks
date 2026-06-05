@@ -46,10 +46,12 @@ const HistoryPage = () => {
             <div key={h._id} className={styles.historyItem}>
               <Link
                 href={
-                  "/courses/" + (h.lesson.courseId as { slug: string }).slug
+                  (h.lesson?.courseId as { slug: string } | null)?.slug
+                    ? `/courses/${(h.lesson?.courseId as { slug: string }).slug}`
+                    : "#"
                 }
               >
-                <img src={"./course.webp"} className={styles.thumbnail} />
+                <img src="./course.webp" className={styles.thumbnail} />
               </Link>
 
               <div className={styles.content}>
