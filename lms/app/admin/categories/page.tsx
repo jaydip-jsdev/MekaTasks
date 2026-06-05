@@ -5,16 +5,11 @@ import React, { useEffect, useState } from "react";
 import AddCategoryModel from "./AddCategoryModel";
 import styles from "./style.module.css";
 import { Trash2 } from "lucide-react";
-
-interface category {
-  _id: string;
-  name: string;
-  slug: string;
-}
+import { Category } from "@/Types/category";
 
 const CategoriesPage = () => {
   const [isAddingCategory, setIsAddingCategory] = useState<boolean>(false);
-  const [categories, setCategories] = useState<category[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   const fetchCategoreis = async () => {
     const response = await GetCategories();

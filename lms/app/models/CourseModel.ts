@@ -1,18 +1,7 @@
-import mongoose, { models, Schema, Types } from "mongoose";
+import { Course } from "@/Types/courses";
+import mongoose, { models, Schema } from "mongoose";
 
-interface ICourse {
-  title: string;
-  slug: string;
-  description: string;
-  category: Types.ObjectId;
-  lessons: Types.ObjectId[];
-  thumnail?: string;
-  totalLessons?: number;
-  enrolledStudents?: number;
-  isPublished: boolean;
-}
-
-export const CourseSchema = new Schema<ICourse>(
+export const CourseSchema = new Schema<Course>(
   {
     title: {
       type: String,
@@ -54,4 +43,4 @@ export const CourseSchema = new Schema<ICourse>(
   { timestamps: true },
 );
 
-export default models.Course || mongoose.model<ICourse>("Course", CourseSchema);
+export default models.Course || mongoose.model<Course>("Course", CourseSchema);

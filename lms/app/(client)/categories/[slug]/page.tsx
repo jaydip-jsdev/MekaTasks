@@ -2,30 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { GetCategories, GetCourses } from "@/lib/axios/api";
+import { EnrollCourse, GetCategories, GetCourses } from "@/lib/axios/api";
 import style from "./style.module.css";
 import Card from "@/app/components/card/Card";
-
-interface Course {
-  _id: string;
-  title: string;
-  slug: string;
-  description: string;
-  category: {
-    _id: string;
-    name: string;
-  };
-  thumnail?: string;
-  totalLessons?: number;
-  enrolledStudents?: number;
-  isPublished: boolean;
-}
-
-interface Category {
-  _id: string;
-  name: string;
-  slug: string;
-}
+import isAuthenticated from "@/lib/CheckAuth/auth";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/lib/ClientError";
+import { Category, Course } from "@/Types/courses";
 
 const CategoryDetaisPage = () => {
   const params = useParams();
@@ -33,6 +16,7 @@ const CategoryDetaisPage = () => {
   const [categoryName, setCategoryName] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [authenticated, setAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -83,6 +67,48 @@ const CategoryDetaisPage = () => {
     fetchCourses();
   }, [params?.slug]);
 
+  const checkAuthentication = async () => {
+    const auth = await isAuthenticated();
+    setAuthenticated(auth);
+  };
+
+  useEffect(() => {
+    checkAuthentication();
+  }, []);
+
+  const fetchCourses = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const res = await GetCourses();
+
+      setCourses(res.data.data);
+    } catch (err: any) {
+      setError(
+        err.response?.data?.message || err.message || "Something went wrong",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEnroll = async (courseId: string) => {
+    try {
+      if (!authenticated) {
+        toast.warn("Login to Enroll");
+        return;
+      }
+      const response = await EnrollCourse(courseId);
+      const data = response.data.data;
+      if (response.status === 200) {
+        fetchCourses();
+      }
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    }
+  };
+
   if (loading) {
     return (
       <div className={style.loading}>
@@ -115,6 +141,10 @@ const CategoryDetaisPage = () => {
               category={course.category}
               slug={course.slug}
               image="/course.webp"
+              fromCats
+              handleEnroll={() => handleEnroll(course._id)}
+              isAuthenticated={authenticated}
+              isEnrolled={course.isEnrolled}
             />
           ))}
         </div>

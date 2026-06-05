@@ -1,61 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import styles from "./coursepage.module.css";
-import { GetCourses } from "@/lib/axios/api";
 import Card from "@/app/components/card/Card";
-import isAuthenticated from "@/lib/CheckAuth/auth";
-
-interface ApiResponse {
-  _id: string;
-  title: string;
-  slug: string;
-  description: string;
-  lesson: any[];
-  category: any;
-  isPublished: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+import { useCourses } from "@/hooks/useCourses";
 
 const CoursesPage = () => {
-  const [courses, setCourses] = useState<ApiResponse[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
-
-  const fetchCourses = async () => {
-    try {
-      setLoading(true);
-      setError("");
-
-      const res = await GetCourses();
-
-      setCourses(res.data.data);
-    } catch (err: any) {
-      setError(
-        err.response?.data?.message || err.message || "Something went wrong",
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const checkAuthentication = async () => {
-    const auth = await isAuthenticated();
-    setAuthenticated(auth);
-  };
-
-  useEffect(() => {
-    checkAuthentication();
-  }, []);
-
-  useEffect(() => {
-    fetchCourses();
-  }, []);
+  const { authenticated, courses, error, handleEnroll, loading } =
+    useCourses();
 
   if (loading) {
-    <p>Loading...</p>;
+    return <p>Loading...</p>;
   }
 
   if (error) {
@@ -65,7 +19,7 @@ const CoursesPage = () => {
   return (
     <div>
       <div className={`wrapper ${styles["cards-container"]}`}>
-        {courses.length > 0 ? (
+        {courses?.length > 0 ? (
           courses?.map((c, index) => {
             return (
               <Card
@@ -76,6 +30,8 @@ const CoursesPage = () => {
                 category={c.category}
                 image="/course.webp"
                 isAuthenticated={authenticated}
+                isEnrolled={c.isEnrolled}
+                handleEnroll={() => handleEnroll(c._id)}
               />
             );
           })

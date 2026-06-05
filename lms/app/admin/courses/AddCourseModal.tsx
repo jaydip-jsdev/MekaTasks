@@ -5,13 +5,9 @@ import {
   getCourseDetails,
 } from "@/lib/axios/api";
 import { getErrorMessage } from "@/lib/ClientError";
+import { Category } from "@/Types/category";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
-interface categories {
-  _id: string;
-  name: string;
-}
 
 interface AddCourseModalProps {
   setAddingCourse: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,7 +22,7 @@ const AddCourseModal = ({
   editingSlug,
   setEditing,
 }: AddCourseModalProps) => {
-  const [categories, setCategories] = useState<categories[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [courseData, setCourseData] = useState({
     title: "",
     description: "",
@@ -155,7 +151,11 @@ const AddCourseModal = ({
           >
             <option value="">Select category</option>
             {categories.map((c) => {
-              return <option value={c.name}>{c.name}</option>;
+              return (
+                <option key={c._id} value={c._id}>
+                  {c.name}
+                </option>
+              );
             })}
           </select>
         </div>

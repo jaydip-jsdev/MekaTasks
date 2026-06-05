@@ -2,19 +2,7 @@ import React from "react";
 import styles from "./card.module.css";
 import Link from "next/link";
 import { Pencil, Trash2 } from "lucide-react";
-
-interface CardProps {
-  title: string;
-  slug: string;
-  description: string;
-  category: any;
-  image: string;
-  isAdmin?: boolean;
-  onEdit?: () => void;
-  onDelete?: () => void;
-  isAuthenticated?: boolean;
-  fromCats?: boolean;
-}
+import { CardProps } from "@/Types/card";
 
 const Card = ({
   title,
@@ -27,6 +15,8 @@ const Card = ({
   onDelete,
   isAuthenticated = true,
   fromCats = false,
+  isEnrolled,
+  handleEnroll,
 }: CardProps) => {
   return (
     <div className={styles.card}>
@@ -44,17 +34,23 @@ const Card = ({
       <div className={styles.cardBody}>
         <div className={styles.cardHead}>
           <h3 className={styles.cardTitle}>{title.slice(0, 15)}</h3>
-          <span>{category?.name}</span>
+          <span>
+            {typeof category === "string" ? category : category?.name}
+          </span>{" "}
         </div>
         <p className={styles.cardDesc}>{description.slice(0, 60)}...</p>
         {isAdmin ? (
           <Link href={isAuthenticated ? "courses/" + slug : "/login"}>
             <button className={styles.viewBtn}>View</button>
           </Link>
-        ) : (
-          <Link href={isAuthenticated ? "/courses/" + slug : "/login"}>
-            <button className={styles.viewBtn}>View</button>
+        ) : isEnrolled ? (
+          <Link href={"/courses/" + slug}>
+            <button className={styles.viewBtn}>Watch Now</button>
           </Link>
+        ) : (
+          <button className={styles.viewBtn} onClick={handleEnroll}>
+            Enroll Now{" "}
+          </button>
         )}
       </div>
     </div>

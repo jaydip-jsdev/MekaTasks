@@ -10,11 +10,6 @@ import { getErrorMessage } from "@/lib/ClientError";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-interface categories {
-  _id: string;
-  name: string;
-}
-
 interface UploadLessonModalProps {
   setAddingLesson: React.Dispatch<React.SetStateAction<boolean>>;
   fetchLessons: () => Promise<void>;

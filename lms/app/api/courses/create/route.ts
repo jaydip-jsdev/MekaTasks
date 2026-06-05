@@ -18,23 +18,33 @@ export async function POST(req: NextRequest) {
 
     const { title, slug, description, category }: CourseBody = await req.json();
 
-    if (!title || !slug || !description)
-      return ApiError("All the fields are required", 401);
+    const sanitizedTitle = title?.trim();
+    const sanitizedSlug = slug?.trim().toLowerCase();
+    const sanitizedDescription = description?.trim();
+    const sanitizedCategory = category?.trim();
 
-    if (!category) return ApiError("Category is required", 401);
-
-    const categoryExist = await CategoriesModel.findOne({ name: category });
+    if (
+      !sanitizedTitle ||
+      !sanitizedSlug ||
+      !sanitizedDescription ||
+      !sanitizedCategory
+    ) {
+      return ApiError("All fields are required", 401);
+    }
+    const categoryExist = await CategoriesModel.findOne({
+      _id: sanitizedCategory,
+    });
 
     if (!categoryExist) return ApiError("This category doesn't exist", 401);
 
-    const existingCourse = await CourseModel.findOne({ slug });
+    const existingCourse = await CourseModel.findOne({ slug: sanitizedSlug });
     if (existingCourse) return ApiError("Course with this slug already exist");
 
     const NewCourse = {
-      title,
-      slug,
-      description,
-      category: categoryExist._id,
+      title: sanitizedTitle,
+      slug: sanitizedSlug,
+      description: sanitizedDescription,
+      category: sanitizedCategory,
     };
 
     const course = await CourseModel.create(NewCourse);

@@ -1,16 +1,7 @@
-import mongoose, { Schema, Types } from "mongoose";
+import { IUser } from "@/Types/user";
+import mongoose, { Schema } from "mongoose";
 
-interface IUsers {
-  name: string;
-  email: string;
-  password: string;
-  role: "student" | "admin";
-  avatar?: string;
-  bio?: string;
-  enrolledCourses: Types.ObjectId[];
-}
-
-const UserScheam = new Schema<IUsers>(
+const UserScheam = new Schema<IUser>(
   {
     name: {
       type: String,
@@ -41,5 +32,5 @@ const UserScheam = new Schema<IUsers>(
 );
 
 const UserModel =
-  mongoose.models.User || mongoose.model<IUsers>("User", UserScheam);
+  mongoose.models.User || mongoose.model<IUser>("User", UserScheam);
 export default UserModel;

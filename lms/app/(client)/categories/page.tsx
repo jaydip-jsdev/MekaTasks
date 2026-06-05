@@ -6,15 +6,10 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Styles from "./style.module.css";
 import Link from "next/link";
-
-interface Categories {
-  _id: string;
-  name: string;
-  slug: string;
-}
+import { Category } from "@/Types/category";
 
 const CategoriesPage = () => {
-  const [cats, setCats] = useState<Categories[]>([]);
+  const [cats, setCats] = useState<Category[]>([]);
 
   const fetchCategories = async () => {
     try {

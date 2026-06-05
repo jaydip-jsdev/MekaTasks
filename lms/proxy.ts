@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-
-interface TokenPayload {
-  id: string;
-  email: string;
-  role: string;
-}
+import { TokenPayload } from "./Types/TokenPayload";
 
 export function proxy(req: NextRequest) {
   const token = req.cookies.get("token")?.value;

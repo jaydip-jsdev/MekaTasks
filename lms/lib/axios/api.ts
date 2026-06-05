@@ -1,18 +1,13 @@
+import { LoginPayload, RegisterPayload } from "@/Types/auth";
 import axiosInstance from "./axios";
+import { CreateCategoryPayload } from "@/Types/category";
+import { CreateCoursePayload } from "@/Types/courses";
 
-interface RegisterPayload {
-  name: string;
-  email: string;
-  password: string;
-}
+// auth
 export const register = (payload: RegisterPayload) => {
   return axiosInstance.post("register", payload);
 };
 
-interface LoginPayload {
-  email: string;
-  password: string;
-}
 export const login = (payload: LoginPayload) => {
   return axiosInstance.post("login", payload);
 };
@@ -21,6 +16,7 @@ export const logout = () => {
   return axiosInstance.post("logout");
 };
 
+// courses crud
 export const GetCourses = (catId?: string) => {
   let endpoint = catId ? `courses?categoryId=${catId}` : "courses";
   return axiosInstance.get(endpoint);
@@ -30,18 +26,11 @@ export const getCourseDetails = (slug: string) => {
   return axiosInstance.get("courses/" + slug);
 };
 
-interface CoursePayload {
-  title: string;
-  description: string;
-  slug: string;
-  category: string;
-}
-
-export const AddCourse = (payload: CoursePayload) => {
+export const AddCourse = (payload: CreateCoursePayload) => {
   return axiosInstance.post("courses/create", payload);
 };
 
-export const EditCourse = (slug: string, payload: CoursePayload) => {
+export const EditCourse = (slug: string, payload: CreateCoursePayload) => {
   return axiosInstance.patch("courses/" + slug, payload);
 };
 
@@ -49,12 +38,16 @@ export const DeleteCourse = (slug: string) => {
   return axiosInstance.delete("courses/" + slug);
 };
 
-interface categoryPayload {
-  name: string;
-  slug: string;
-}
+export const EnrollCourse = (courseId: string) => {
+  return axiosInstance.post("courses/enroll", { courseId });
+};
 
-export const addCategory = (payload: categoryPayload) => {
+export const enrolledCourses = () => {
+  return axiosInstance.get("my/enrolledcourses");
+};
+
+// categories crud
+export const addCategory = (payload: CreateCategoryPayload) => {
   return axiosInstance.post("categories/create", payload);
 };
 
@@ -66,6 +59,7 @@ export const DeleteCategories = (id: string) => {
   return axiosInstance.delete("categories/" + id);
 };
 
+// lessons crud
 export const UploadLesson = (payload: FormData) => {
   return axiosInstance.post("lessons/create", payload, {
     headers: {
@@ -84,4 +78,13 @@ export const EditLesson = (id: string, payload: FormData) => {
 
 export const DeleteLesson = (id: string) => {
   return axiosInstance.delete("lessons/" + id);
+};
+
+// History crud
+export const AddToHistory = (lessonId: string) => {
+  return axiosInstance.post("my/history/" + lessonId);
+};
+
+export const getHistory = () => {
+  return axiosInstance.get("my/history");
 };

@@ -5,21 +5,10 @@ import styles from "./style.module.css";
 import Card from "@/app/components/card/Card";
 import { DeleteCourse, GetCourses } from "@/lib/axios/api";
 import AddCourseModal from "./AddCourseModal";
-
-interface ApiResponse {
-  _id: string;
-  title: string;
-  slug: string;
-  description: string;
-  lesson: any[];
-  category: any;
-  isPublished: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+import { Course } from "@/Types/courses";
 
 const CoursePage = () => {
-  const [courses, setCourses] = useState<ApiResponse[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
   const [addingCourse, setAddingCourse] = useState<boolean>(false);
   const [editing, setEditing] = useState("");
 

@@ -1,30 +1,14 @@
 "use client";
 
-import { GetCourses } from "@/lib/axios/api";
 import styles from "../page.module.css";
 import Card from "./card/Card";
-import { useEffect, useState } from "react";
-
-interface ApiResponse {
-  _id: string;
-  title: string;
-  category: string;
-  slug: string;
-  description: string;
-  image: string;
-}
+import { useCourses } from "@/hooks/useCourses";
 
 export default function FeaturedCoursesSection() {
-  const [featured, setFeatured] = useState<ApiResponse[]>([]);
-  const featuredCourses = async () => {
-    const response = await GetCourses();
-    const featured = response.data.data.slice(0, 8);
-    setFeatured(featured);
-  };
+  const { authenticated, courses, error, handleEnroll, loading } = useCourses();
 
-  useEffect(() => {
-    featuredCourses();
-  }, []);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className={`${"wrapper"} ${styles.featured}`}>
@@ -34,14 +18,17 @@ export default function FeaturedCoursesSection() {
       </p>
       <div>
         <div className={styles.cardContainer}>
-          {featured.map((course) => (
+          {courses.slice(0, 8).map((course) => (
             <Card
               key={course._id}
               title={course.title}
               category={course.category}
               slug={course.slug}
               description={course.description}
-              image={course.image || "/course.webp"}
+              image={"/course.webp"}
+              handleEnroll={() => handleEnroll(course._id)}
+              isAuthenticated={authenticated}
+              isEnrolled={course.isEnrolled}
             />
           ))}
         </div>

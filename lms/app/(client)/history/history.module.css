@@ -1,0 +1,54 @@
+.historyItem {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  padding: 16px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  background-color: #ffffff;
+}
+
+.thumbnail {
+  width: 240px;
+  height: 135px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lessonTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: #222;
+}
+
+.courseTitle {
+  margin-top: 8px;
+  font-size: 15px;
+  color: #666;
+}
+
+.watchedAt {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .historyItem {
+    flex-direction: column;
+  }
+
+  .thumbnail {
+    width: 100%;
+    height: auto;
+  }
+}

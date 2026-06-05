@@ -1,0 +1,78 @@
+"use client";
+
+import { EnrollCourse, GetCourses } from "@/lib/axios/api";
+import isAuthenticated from "@/lib/CheckAuth/auth";
+import { getErrorMessage } from "@/lib/ClientError";
+import { Course } from "@/Types/courses";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
+interface UseCoursesReturn {
+  courses: Course[];
+  loading: boolean;
+  error: string;
+  authenticated: boolean;
+  fetchCourses: () => Promise<void>;
+  handleEnroll: (courseId: string) => Promise<void>;
+}
+
+export const useCourses = (categoryId?: string): UseCoursesReturn => {
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [authenticated, setAuthenticated] = useState<boolean>(false);
+
+  const fetchCourses = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const res = await GetCourses(categoryId);
+      setCourses(res.data.data);
+    } catch (error: any) {
+      setError(
+        error.response?.data?.message ||
+          error.message ||
+          "Something went wrong",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEnroll = async (courseId: string) => {
+    try {
+      if (!authenticated) {
+        toast.warn("Login to Enroll");
+        return;
+      }
+
+      const response = await EnrollCourse(courseId);
+
+      if (response.status === 200) {
+        fetchCourses();
+      }
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    }
+  };
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const auth = await isAuthenticated();
+      setAuthenticated(auth);
+    };
+
+    checkAuth();
+    fetchCourses();
+  }, [categoryId]);
+
+  return {
+    courses,
+    loading,
+    error,
+    authenticated,
+    fetchCourses,
+    handleEnroll,
+  };
+};

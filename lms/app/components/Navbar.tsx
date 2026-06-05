@@ -7,6 +7,8 @@ import Link from "next/link";
 import isAuthenticated from "@/lib/CheckAuth/auth";
 import { logout } from "@/lib/axios/api";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/lib/ClientError";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -30,7 +32,10 @@ export default function Navbar() {
         router.push("/");
         setShowLogoutBtn(false);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      toast.error(getErrorMessage(error));
+    }
   };
 
   return (
@@ -64,9 +69,19 @@ export default function Navbar() {
             <div className="profile">
               <p onClick={() => setShowLogoutBtn(!showLogoutBtn)}>Profile</p>
               {showLogoutBtn && (
-                <button className="logout-btn" onClick={handleLogout}>
-                  Logout
-                </button>
+                <div className="popup">
+                  <Link href={routes.ENROLLED_COURSES}>
+                    <button className="enrolled-courses-btn">My Courses</button>
+                  </Link>
+                  <Link href={routes.HISTORY}>
+                    <button className="history-btn enrolled-courses-btn">
+                      History
+                    </button>
+                  </Link>
+                  <button className="logout-btn" onClick={handleLogout}>
+                    Logout
+                  </button>
+                </div>
               )}
             </div>
           ) : (

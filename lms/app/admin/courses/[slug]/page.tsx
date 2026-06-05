@@ -5,18 +5,13 @@ import styles from "./style.module.css";
 import { DeleteLesson, getCourseDetails } from "@/lib/axios/api";
 import { useParams } from "next/navigation";
 import UploadLessonModal from "./UploadLessonModal";
-
-interface ILessons {
-  _id: string;
-  title: string;
-  description: string;
-}
+import { Lesson } from "@/Types/Lesson";
 
 const CourseDetailsPage = () => {
   const params = useParams();
   const slug = params?.slug as string;
 
-  const [lessons, setLessons] = useState<ILessons[]>([]);
+  const [lessons, setLessons] = useState<Lesson[]>([]);
   const [addingLesson, setAddingLesson] = useState<boolean>(false);
   const [courseId, setCourseId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);

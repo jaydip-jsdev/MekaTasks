@@ -1,17 +1,11 @@
-import mongoose, { model, models, Schema, Types } from "mongoose";
+import { Lesson } from "@/Types/Lesson";
+import mongoose, { models, Schema } from "mongoose";
 
-interface ILessons {
-  courseId: Types.ObjectId;
-  title: string;
-  description: string;
-  slug?: string;
-  video_url: string;
-}
-
-const LessonSchema = new Schema<ILessons>(
+const LessonSchema = new Schema<Lesson>(
   {
     courseId: {
       type: mongoose.Schema.ObjectId,
+      ref: "Course",
       required: true,
     },
     title: {
@@ -33,5 +27,4 @@ const LessonSchema = new Schema<ILessons>(
   { timestamps: true },
 );
 
-export default models.Lesson ||
-  mongoose.model<ILessons>("Lesson", LessonSchema);
+export default models.Lesson || mongoose.model<Lesson>("Lesson", LessonSchema);

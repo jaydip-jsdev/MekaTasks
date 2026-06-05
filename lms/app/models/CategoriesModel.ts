@@ -1,12 +1,7 @@
+import { Category } from "@/Types/category";
 import mongoose, { models, Schema } from "mongoose";
 
-interface ICategories {
-  name: string;
-  slug: string;
-  icon: string;
-}
-
-const CategorySchema = new Schema<ICategories>(
+const CategorySchema = new Schema<Category>(
   {
     name: {
       type: String,
@@ -26,4 +21,4 @@ const CategorySchema = new Schema<ICategories>(
 );
 
 export default models.Category ||
-  mongoose.model<ICategories>("Category", CategorySchema);
+  mongoose.model<Category>("Category", CategorySchema);

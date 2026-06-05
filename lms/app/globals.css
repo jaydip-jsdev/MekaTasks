@@ -300,7 +300,6 @@ select {
 }
 
 .logout-btn {
-  position: absolute;
   background-color: red;
   color: white;
   font-weight: 700;
@@ -309,10 +308,39 @@ select {
   border: none;
   outline: none;
   border-radius: 1rem;
-  top: 50;
   cursor: pointer;
+}
+
+.enrolled-courses-btn {
+  background-color: green;
+  color: white;
+  font-weight: 700;
+  width: 100px;
+  height: 2rem;
+  border: none;
+  outline: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
 }
 
 .no-account {
   margin-bottom: 2vh;
+}
+
+.popup {
+  position: absolute;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: dodgerblue;
+  top: 50;
+}
+
+.card-container {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
 }

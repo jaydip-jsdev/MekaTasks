@@ -66,7 +66,7 @@ const LoginPage = () => {
             <div className="no-account">
               <span>
                 Don't have a account?{" "}
-                <Link href={"/register"}>Register</Link>{" "}
+                <Link href={routes.REGISTERPAGE}>Register</Link>{" "}
               </span>
             </div>
             <div className="form-action">
