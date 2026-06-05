@@ -6,10 +6,17 @@ import LessonsModel from "@/app/models/LessonsModel";
 import CourseModel from "@/app/models/CourseModel";
 import ConnectDB from "@/lib/db";
 import mongoose from "mongoose";
+import { AdminAuth } from "@/lib/adminAuth";
 
 export async function POST(req: NextRequest) {
   try {
     await ConnectDB();
+
+    const auth = await AdminAuth(req);
+    if (!auth.status) {
+      return ApiError(auth.message || "Admin access required", auth.status);
+    }
+
     const formData = await req.formData();
 
     const title = formData.get("title") as string;

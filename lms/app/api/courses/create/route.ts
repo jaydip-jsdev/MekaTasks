@@ -16,6 +16,11 @@ export async function POST(req: NextRequest) {
   try {
     await ConnectDB();
 
+    const auth = await AdminAuth(req);
+    if (!auth.status) {
+      return ApiError(auth.message || "Admin access required", auth.status);
+    }
+
     const { title, slug, description, category }: CourseBody = await req.json();
 
     const sanitizedTitle = title?.trim();
