@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
 
     const normalizedEmail = email.toLowerCase();
 
-    const exist = await UserModel.findOne({ normalizedEmail });
+    const exist = await UserModel.findOne({ email: normalizedEmail });
     if (exist) {
       return ApiError("User already exist with this email", 400);
     }
