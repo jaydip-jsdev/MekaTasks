@@ -44,9 +44,8 @@ export async function PATCH(
 
     const auth = AdminAuth(req);
     if (!auth.success) {
-      return ApiSuccess(auth.message || "authentication error");
+      return ApiError(auth.message || "authentication error", auth.status || 401);
     }
-    
     const { id } = await context.params;
 
     if (!id) {
