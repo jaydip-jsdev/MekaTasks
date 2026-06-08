@@ -11,10 +11,3 @@ export interface Lesson {
   createdAt?: string;
   updatedAt?: string;
 }
-
-export interface CreateLessonPayload {
-  courseId: string;
-  title: string;
-  description: string;
-  video_url: string;
-}

@@ -20,10 +20,3 @@ export interface Course {
   createdAt?: string;
   updatedAt?: string;
 }
-
-// export interface CreateCoursePayload {
-//   title: string;
-//   description: string;
-//   slug: string;
-//   category: string;
-// }
