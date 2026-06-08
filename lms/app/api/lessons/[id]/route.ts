@@ -3,10 +3,9 @@ import { ApiError, ApiSuccess } from "@/lib/api-response";
 import ConnectDB from "@/lib/db";
 
 import { NextRequest } from "next/server";
-import path from "path";
-import fs from "fs/promises";
 import CourseModel from "@/app/models/CourseModel";
 import { AdminAuth } from "@/lib/adminAuth";
+import { uploadToCloud } from "@/lib/cloudinary/UploadToCloud";
 
 export async function GET(
   req: NextRequest,
@@ -36,16 +35,21 @@ export async function GET(
 export async function PATCH(
   req: NextRequest,
   context: {
-    params: { id: string };
+    params: Promise<{ id: string }>;
   },
 ) {
   try {
     await ConnectDB();
 
-    const auth = AdminAuth(req);
-    if (!auth.success) {
-      return ApiError(auth.message || "authentication error", auth.status || 401);
+    const auth = await AdminAuth(req);
+
+    if (!auth.status) {
+      return ApiError(
+        auth.message || "Authentication error",
+        auth.status || 401,
+      );
     }
+
     const { id } = await context.params;
 
     if (!id) {
@@ -64,58 +68,77 @@ export async function PATCH(
     const description = formData.get("description") as string | null;
     const slug = formData.get("slug") as string | null;
     const courseId = formData.get("courseId") as string | null;
+
     const lesson = formData.get("lesson") as File | null;
+    const thumbnail = formData.get("thumbnail") as File | null;
 
     const updates: Record<string, any> = {};
 
-    if (title) updates.title = title;
-    if (description) updates.description = description;
-    if (courseId) updates.courseId = courseId;
+    if (title?.trim()) {
+      updates.title = title.trim();
+    }
 
-    if (slug) {
+    if (description?.trim()) {
+      updates.description = description.trim();
+    }
+
+    if (slug?.trim()) {
       const exist = await LessonsModel.findOne({
-        slug,
+        slug: slug.trim(),
         _id: { $ne: id },
       });
 
       if (exist) {
-        return ApiError("Lesson already exists with slug " + slug, 400);
+        return ApiError(`Lesson already exists with slug ${slug}`, 400);
       }
 
-      updates.slug = slug;
+      updates.slug = slug.trim();
     }
 
+    if (courseId?.trim()) {
+      const course = await CourseModel.findById(courseId);
+
+      if (!course) {
+        return ApiError("Course not found", 404);
+      }
+
+      updates.courseId = courseId;
+    }
+
+    // Upload new video
     if (lesson && lesson.size > 0) {
       if (!lesson.type.startsWith("video/")) {
         return ApiError("Only video files are allowed", 400);
       }
 
-      const bytes = await lesson.arrayBuffer();
-      const buffer = Buffer.from(bytes);
+      const uploadedVideo = await uploadToCloud(lesson, {
+        folder: "mekalearn/lessons",
+        resourceType: "video",
+      });
 
-      const uploadDir = path.join(process.cwd(), "public/uploads");
-      await fs.mkdir(uploadDir, { recursive: true });
+      updates.video_url = uploadedVideo.secure_url;
+    }
 
-      const fileName = `${Date.now()}~${lesson.name}`;
-      const filePath = path.join(uploadDir, fileName);
+    // Upload new thumbnail
+    if (thumbnail && thumbnail.size > 0) {
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
-      await fs.writeFile(filePath, buffer);
-
-      if (dbLesson.video_url) {
-        try {
-          const oldFilePath = path.join(
-            process.cwd(),
-            "public",
-            dbLesson.video_url,
-          );
-
-          await fs.unlink(oldFilePath);
-        } catch (err) {
-          console.log("Old file not found");
-        }
+      if (!allowedTypes.includes(thumbnail.type)) {
+        return ApiError("Invalid image format", 400);
       }
 
-      updates.video_url = `/uploads/${fileName}`;
+      const MAX_SIZE = 5 * 1024 * 1024;
+
+      if (thumbnail.size > MAX_SIZE) {
+        return ApiError("Image size must be less than 5MB", 400);
+      }
+
+      const uploadedThumbnail = await uploadToCloud(thumbnail, {
+        folder: "mekalearn/thumbnails",
+        resourceType: "image",
+      });
+
+      updates.thumbnail = uploadedThumbnail.secure_url;
     }
 
     if (courseId && courseId.toString() !== dbLesson.courseId.toString()) {
@@ -139,6 +162,7 @@ export async function PATCH(
     return ApiSuccess("Lesson updated successfully", updatedLesson, 200);
   } catch (error) {
     console.error(error);
+
     return ApiError(
       error instanceof Error ? error.message : "Server Error",
       500,

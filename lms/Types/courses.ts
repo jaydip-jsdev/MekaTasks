@@ -11,7 +11,7 @@ export interface Course {
 
   lessons: Lesson[];
 
-  thumnail?: string;
+  thumbnail?: string;
   totalLessons?: number;
   enrolledStudents?: number;
   isPublished: boolean;
@@ -21,9 +21,9 @@ export interface Course {
   updatedAt?: string;
 }
 
-export interface CreateCoursePayload {
-  title: string;
-  description: string;
-  slug: string;
-  category: string;
-}
+// export interface CreateCoursePayload {
+//   title: string;
+//   description: string;
+//   slug: string;
+//   category: string;
+// }

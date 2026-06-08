@@ -40,7 +40,7 @@ const CoursePage = () => {
       </div>
       <div className={styles.cardContainer}>
         {courses.length < 1 ? (
-          <div className={styles.notFound} >
+          <div className={styles.notFound}>
             <p>Courses not found</p>
           </div>
         ) : (
@@ -50,7 +50,7 @@ const CoursePage = () => {
                 title={c.title}
                 category={c.category}
                 description={c.description}
-                image="/course.webp"
+                image={c.thumbnail || "/course.webp"}
                 slug={c.slug}
                 isAdmin
                 key={c._id}

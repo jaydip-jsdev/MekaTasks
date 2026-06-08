@@ -25,7 +25,7 @@ export default function FeaturedCoursesSection() {
               category={course.category}
               slug={course.slug}
               description={course.description}
-              image={"/course.webp"}
+              image={course.thumbnail || "/course.webp"}
               handleEnroll={() => handleEnroll(course._id)}
               isAuthenticated={authenticated}
               isEnrolled={course.isEnrolled}

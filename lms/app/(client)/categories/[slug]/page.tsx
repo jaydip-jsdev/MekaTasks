@@ -115,7 +115,7 @@ const CategoryDetaisPage = () => {
               description={course.description}
               category={course.category}
               slug={course.slug}
-              image="/course.webp"
+              image={course.thumbnail || "/course.webp"}
               fromCats
               handleEnroll={() => handleEnroll(course._id)}
               isAuthenticated={authenticated}

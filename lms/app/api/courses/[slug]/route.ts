@@ -5,6 +5,7 @@ import ConnectDB from "@/lib/db";
 import { NextRequest } from "next/server";
 import "@/app/models/LessonsModel";
 import { AdminAuth } from "@/lib/adminAuth";
+import { uploadToCloud } from "@/lib/cloudinary/UploadToCloud";
 
 export async function GET(
   req: NextRequest,
@@ -32,51 +33,90 @@ export async function GET(
 export async function PATCH(
   req: NextRequest,
   context: {
-    params: { slug: string };
+    params: Promise<{ slug: string }>;
   },
 ) {
   try {
     await ConnectDB();
 
-    const auth = AdminAuth(req);
+    const auth = await AdminAuth(req);
 
-    if (!auth.success)
-      return ApiError(auth.message || "Admin Access required", 501);
+    if (!auth.status) {
+      return ApiError(auth.message || "Admin access required", 401);
+    }
 
     const { slug } = await context.params;
 
-    if (!slug) {
-      return ApiError("Id is required", 401);
+    const course = await CourseModel.findOne({ slug });
+
+    if (!course) {
+      return ApiError("Course not found", 404);
     }
 
-    const { title, description, category } = await req.json();
+    const formData = await req.formData();
 
-    if (category) {
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const category = formData.get("category") as string;
+    const thumbnail = formData.get("thumbnail") as File | null;
+
+    const updateData: Record<string, any> = {};
+
+    if (title?.trim()) {
+      updateData.title = title.trim();
+    }
+
+    if (description?.trim()) {
+      updateData.description = description.trim();
+    }
+
+    if (category?.trim()) {
       const categoryExist = await CategoriesModel.findById(category);
 
-      if (!categoryExist) return ApiError("Category not found", 401);
+      if (!categoryExist) {
+        return ApiError("Category not found", 404);
+      }
+
+      updateData.category = category;
+    }
+
+    if (thumbnail && thumbnail.size > 0) {
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+      if (!allowedTypes.includes(thumbnail.type)) {
+        return ApiError("Invalid image format");
+      }
+
+      const MAX_SIZE = 5 * 1024 * 1024;
+
+      if (thumbnail.size > MAX_SIZE) {
+        return ApiError("Image size must be less than 5MB");
+      }
+
+      const uploadedThumbnail = await uploadToCloud(thumbnail, {
+        folder: "courses",
+        resourceType: "image",
+      });
+
+      updateData.thumbnail = uploadedThumbnail.secure_url;
     }
 
     const updatedCourse = await CourseModel.findOneAndUpdate(
       { slug },
-      {
-        title,
-        description,
-        category,
-      },
+      updateData,
       {
         new: true,
       },
-    );
+    ).populate("category");
 
-    if (!updatedCourse) {
-      return ApiError("Course not found", 404);
-    }
-
-    return ApiSuccess("Course Updated successfull", updatedCourse);
+    return ApiSuccess("Course Updated Successfully", updatedCourse);
   } catch (error) {
-    console.log(error);
-    return ApiError("Server error", 500);
+    console.error(error);
+
+    return ApiError(
+      error instanceof Error ? error.message : "Unknown error occurred",
+      500,
+    );
   }
 }
 

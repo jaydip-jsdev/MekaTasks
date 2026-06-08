@@ -67,7 +67,7 @@ const CourseDetailsPage = () => {
                 <li key={l._id}>
                   <div className={styles.lesson}>
                     <img
-                      src="/course.webp"
+                      src={l.thumbnail || "/course.webp"}
                       className={styles.lessonThumbnail}
                       alt=""
                     />

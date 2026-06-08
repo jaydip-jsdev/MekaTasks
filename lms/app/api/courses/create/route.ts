@@ -2,15 +2,9 @@ import CategoriesModel from "@/app/models/CategoriesModel";
 import CourseModel from "@/app/models/CourseModel";
 import { AdminAuth } from "@/lib/adminAuth";
 import { ApiError, ApiSuccess } from "@/lib/api-response";
+import { uploadToCloud } from "@/lib/cloudinary/UploadToCloud";
 import ConnectDB from "@/lib/db";
 import { NextRequest } from "next/server";
-
-interface CourseBody {
-  title: string;
-  slug: string;
-  description: string;
-  category: string;
-}
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,7 +15,14 @@ export async function POST(req: NextRequest) {
       return ApiError(auth.message || "Admin access required", auth.status);
     }
 
-    const { title, slug, description, category }: CourseBody = await req.json();
+    const formData = await req.formData();
+
+    const title = formData.get("title") as string;
+    const slug = formData.get("slug") as string;
+    const description = formData.get("description") as string;
+    const category = formData.get("category") as string;
+
+    const thumbnail = formData.get("thumbnail") as File;
 
     const sanitizedTitle = title?.trim();
     const sanitizedSlug = slug?.trim().toLowerCase();
@@ -36,6 +37,10 @@ export async function POST(req: NextRequest) {
     ) {
       return ApiError("All fields are required", 401);
     }
+
+    if (!thumbnail || thumbnail.size === 0) {
+      return ApiError("Thumbnail is required");
+    }
     const categoryExist = await CategoriesModel.findOne({
       _id: sanitizedCategory,
     });
@@ -45,11 +50,29 @@ export async function POST(req: NextRequest) {
     const existingCourse = await CourseModel.findOne({ slug: sanitizedSlug });
     if (existingCourse) return ApiError("Course with this slug already exist");
 
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (!allowedTypes.includes(thumbnail.type)) {
+      return ApiError("Invalid image format");
+    }
+
+    const MAX_SIZE = 5 * 1024 * 1024;
+
+    if (thumbnail.size > MAX_SIZE) {
+      return ApiError("Image size must be less than 5MB");
+    }
+
+    const uploadedThumbnail = await uploadToCloud(thumbnail, {
+      folder: "courses",
+      resourceType: "image",
+    });
+
     const NewCourse = {
       title: sanitizedTitle,
       slug: sanitizedSlug,
       description: sanitizedDescription,
       category: sanitizedCategory,
+      thumbnail: uploadedThumbnail.secure_url,
     };
 
     const course = await CourseModel.create(NewCourse);

@@ -40,7 +40,10 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <h1 className="logo">MekaLearn</h1>
+      <div className="logo-container">
+        <img src="/mekalearn.png" className="logo-img" alt="" />
+        <h1 className="logo">MekaLearn</h1>
+      </div>
       <button
         className="hamburger"
         onClick={() => setIsOpen(!isOpen)}

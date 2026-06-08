@@ -7,6 +7,25 @@
   flex: 1;
   padding: 24px;
   overflow-y: auto;
+  margin-left: 260px;
+}
+
+@media (max-width: 992px) {
+  .admin-content {
+    margin-left: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-content {
+    margin-left: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-content {
+    margin-left: 60px;
+  }
 }
 
 * {
@@ -27,6 +46,17 @@
   padding: 1rem 3rem;
   background-color: #ffff;
   position: relative;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.logo-img {
+  width: 100px;
 }
 
 .logo {

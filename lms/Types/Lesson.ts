@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 
 export interface Lesson {
+  thumbnail: string;
   _id: string;
   courseId: Types.ObjectId | string | {};
   title: string;

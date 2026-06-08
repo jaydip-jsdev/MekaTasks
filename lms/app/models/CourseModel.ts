@@ -10,6 +10,7 @@ export const CourseSchema = new Schema<Course>(
     slug: {
       type: String,
       required: true,
+      unique: true,
     },
     description: {
       type: String,
@@ -26,7 +27,7 @@ export const CourseSchema = new Schema<Course>(
       ref: "Category",
       required: true,
     },
-    thumnail: {
+    thumbnail: {
       type: String,
     },
     totalLessons: {

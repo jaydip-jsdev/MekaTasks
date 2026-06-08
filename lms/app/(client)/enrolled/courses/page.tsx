@@ -37,7 +37,7 @@ const EnrolledCourses = () => {
               key={c._id}
               category={c.category}
               description={c.description}
-              image="/course.webp"
+              image={c.thumbnail || "/course.webp"}
               slug={c.slug}
               title={c.title}
               isEnrolled={true}

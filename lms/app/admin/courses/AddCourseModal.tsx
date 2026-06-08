@@ -24,6 +24,7 @@ const AddCourseModal = ({
 }: AddCourseModalProps) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [courseData, setCourseData] = useState({
+    thumbnail: null as File | null,
     title: "",
     description: "",
     slug: "",
@@ -66,18 +67,22 @@ const AddCourseModal = ({
     e.preventDefault();
 
     try {
-      const payload = {
-        title: courseData.title,
-        description: courseData.description,
-        slug: courseData.slug,
-        category: courseData.category,
-      };
+      const formData = new FormData();
+
+      if (courseData.thumbnail !== null) {
+        formData.append("thumbnail", courseData.thumbnail);
+      }
+
+      formData.append("title", courseData.title);
+      formData.append("description", courseData.description);
+      formData.append("slug", courseData.slug);
+      formData.append("category", courseData.category);
 
       let response;
       if (editingSlug !== "") {
-        response = await EditCourse(editingSlug, payload);
+        response = await EditCourse(editingSlug, formData);
       } else {
-        response = await AddCourse(payload);
+        response = await AddCourse(formData);
       }
 
       if (response.status === 200) {
@@ -110,6 +115,22 @@ const AddCourseModal = ({
         <button type="button" className="close-btn" onClick={handleClose}>
           ✕
         </button>{" "}
+        <div>
+          <label htmlFor="thumbnail">Course Thumbnail</label>
+          <input
+            type="file"
+            name="thumbnail"
+            placeholder="Upload thumbnail"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+
+              setCourseData((prev) => ({
+                ...prev,
+                thumbnail: file || null,
+              }));
+            }}
+          />
+        </div>
         <div>
           <label htmlFor="title">Course Title</label>
           <input

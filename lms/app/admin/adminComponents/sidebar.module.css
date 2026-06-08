@@ -6,6 +6,7 @@
   padding: 24px 16px;
   display: flex;
   flex-direction: column;
+  position: fixed;
   box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
 }

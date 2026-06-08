@@ -3,6 +3,10 @@ import mongoose, { models, Schema } from "mongoose";
 
 const LessonSchema = new Schema<Lesson>(
   {
+    thumbnail: {
+      type: String,
+      required: true,
+    },
     courseId: {
       type: mongoose.Schema.ObjectId,
       ref: "Course",

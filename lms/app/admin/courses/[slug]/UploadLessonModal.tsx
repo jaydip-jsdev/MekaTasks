@@ -26,6 +26,7 @@ const UploadLessonModal = ({
   setEditingId,
 }: UploadLessonModalProps) => {
   const [lessonData, setLessonData] = useState({
+    thumbnail: null as File | null,
     title: "",
     description: "",
     slug: "",
@@ -33,6 +34,7 @@ const UploadLessonModal = ({
     lessonUrl: "",
     courseId: "",
   });
+  const [publishing, setPublishing] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -49,7 +51,12 @@ const UploadLessonModal = ({
     e.preventDefault();
 
     try {
+      setPublishing(true);
       const formData = new FormData();
+
+      if (lessonData.thumbnail !== null) {
+        formData.append("thumbnail", lessonData.thumbnail);
+      }
 
       formData.append("title", lessonData.title);
       formData.append("description", lessonData.description);
@@ -78,6 +85,8 @@ const UploadLessonModal = ({
       }
     } catch (error) {
       toast.error(getErrorMessage(error));
+    } finally {
+      setPublishing(false);
     }
   };
 
@@ -115,6 +124,22 @@ const UploadLessonModal = ({
         <button type="button" className="close-btn" onClick={handleClose}>
           ✕
         </button>{" "}
+        <div>
+          <label htmlFor="thumbnail">Lesson Thumbnail</label>
+          <input
+            type="file"
+            name="thumbnail"
+            placeholder="Enter Lesson Thumbnail"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+
+              setLessonData((prev) => ({
+                ...prev,
+                thumbnail: file || null,
+              }));
+            }}
+          />
+        </div>
         <div>
           <label htmlFor="title">Lesson Title</label>
           <input
@@ -161,7 +186,16 @@ const UploadLessonModal = ({
           />
         </div>
         <div className="modal-action">
-          <button> {editingId ? "Update" : "Publish"}</button>
+          <button>
+            {" "}
+            {editingId && publishing
+              ? "Updating"
+              : editingId
+                ? "Update"
+                : publishing
+                  ? "Publishing"
+                  : "Publish"}
+          </button>
         </div>
       </form>
     </div>

@@ -1,7 +1,6 @@
 import { LoginPayload, RegisterPayload } from "@/Types/auth";
 import axiosInstance from "./axios";
 import { CreateCategoryPayload } from "@/Types/category";
-import { CreateCoursePayload } from "@/Types/courses";
 
 // auth
 export const register = (payload: RegisterPayload) => {
@@ -26,11 +25,11 @@ export const getCourseDetails = (slug: string) => {
   return axiosInstance.get("courses/" + slug);
 };
 
-export const AddCourse = (payload: CreateCoursePayload) => {
+export const AddCourse = (payload: FormData) => {
   return axiosInstance.post("courses/create", payload);
 };
 
-export const EditCourse = (slug: string, payload: CreateCoursePayload) => {
+export const EditCourse = (slug: string, payload: FormData) => {
   return axiosInstance.patch("courses/" + slug, payload);
 };
 

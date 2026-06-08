@@ -5,8 +5,7 @@ import Card from "@/app/components/card/Card";
 import { useCourses } from "@/hooks/useCourses";
 
 const CoursesPage = () => {
-  const { authenticated, courses, error, handleEnroll, loading } =
-    useCourses();
+  const { authenticated, courses, error, handleEnroll, loading } = useCourses();
 
   if (loading) {
     return <p>Loading...</p>;
@@ -28,7 +27,7 @@ const CoursesPage = () => {
                 slug={c.slug}
                 description={c.description}
                 category={c.category}
-                image="/course.webp"
+                image={c.thumbnail || "/course.webp"}
                 isAuthenticated={authenticated}
                 isEnrolled={c.isEnrolled}
                 handleEnroll={() => handleEnroll(c._id)}
