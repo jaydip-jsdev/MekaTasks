@@ -16,8 +16,21 @@ export const logout = () => {
 };
 
 // courses crud
-export const GetCourses = (catId?: string) => {
-  let endpoint = catId ? `courses?categoryId=${catId}` : "courses";
+export const GetCourses = (catId?: string, search?: string) => {
+  const params = new URLSearchParams();
+
+  if (catId) {
+    params.append("categoryId", catId);
+  }
+
+  if (search) {
+    params.append("search", search);
+  }
+
+  const endpoint = params.toString()
+    ? `courses?${params.toString()}`
+    : "courses";
+
   return axiosInstance.get(endpoint);
 };
 

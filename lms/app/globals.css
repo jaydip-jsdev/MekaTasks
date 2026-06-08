@@ -36,6 +36,7 @@
 
 .wrapper {
   max-width: 74%;
+  min-height: 60vh;
   margin: auto;
 }
 

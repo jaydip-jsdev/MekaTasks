@@ -24,7 +24,19 @@ export async function GET(req: NextRequest) {
     }
 
     const categoryId = req.nextUrl?.searchParams.get("categoryId");
-    const filter = categoryId ? { category: categoryId } : {};
+    const search = req.nextUrl?.searchParams.get("search");
+
+    const filter: any = {};
+
+    if (categoryId) filter.category = categoryId;
+
+    if (search) {
+      filter.title = {
+        $regex: search,
+        $options: "i",
+      };
+    }
+
     const courses = await CourseModel.find(filter).populate("category").lean();
 
     const courseWithStatus = courses.map((c) => ({
