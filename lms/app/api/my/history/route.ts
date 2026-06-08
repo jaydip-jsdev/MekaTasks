@@ -14,13 +14,15 @@ export async function GET(req: NextRequest) {
     const decoded = await VerifyToken(token);
     const user = decoded.id;
 
-    const history = await HistoryModel.find({ user }).populate({
-      path: "lesson",
-      populate: {
-        path: "courseId",
-        model: "Course",
-      },
-    });
+    const history = await HistoryModel.find({ user })
+      .populate({
+        path: "lesson",
+        populate: {
+          path: "courseId",
+          model: "Course",
+        },
+      })
+      .sort({ updatedAt: -1 });
 
     return ApiSuccess("History fetched successfully", history, 200);
   } catch (error) {

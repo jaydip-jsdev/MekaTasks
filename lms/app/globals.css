@@ -46,6 +46,7 @@
   padding: 1rem 3rem;
   background-color: #ffff;
   position: relative;
+  z-index: 999;
 }
 
 .logo-container {
@@ -115,8 +116,9 @@
   }
 
   .menu.open {
-    max-height: 200px;
+    max-height: 700px;
     padding: 1rem 0;
+    overflow: visible;
   }
 
   .menu li {
@@ -160,6 +162,7 @@
 
   .menu.open {
     max-height: 150px;
+    background-color: white;
     padding: 0.75rem 0;
   }
 
@@ -180,12 +183,14 @@
 .login-form {
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
   background-color: aliceblue;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 1rem;
+  margin: auto;
 }
 
 .login-form input {
@@ -196,6 +201,12 @@
   outline: none;
   margin-top: 4px;
   margin-bottom: 1rem;
+}
+
+@media (max-width: 800px) {
+  .login-form input {
+    width: 90vw;
+  }
 }
 
 .form-header {
@@ -222,7 +233,7 @@
 .form-action button {
   background-color: dodgerblue;
   color: white;
-  width: 10vw;
+  width: 50%;
   height: 4vh;
   border: none;
   border-radius: 1rem;
@@ -360,10 +371,12 @@ select {
 
 .popup {
   position: absolute;
+  background-color: white;
   padding: 1rem;
   border-radius: 1rem;
-  background-color: dodgerblue;
-  top: 50;
+  top: 60px;
+  right: 0;
+  z-index: 1000;
 }
 
 .card-container {
@@ -373,4 +386,29 @@ select {
   align-items: center;
   margin-top: 2rem;
   flex-wrap: wrap;
+}
+
+.popup {
+  min-width: 150px;
+}
+
+@media (max-width: 768px) {
+  .profile {
+    width: 100%;
+    background: transparent;
+    border-radius: 0;
+    color: black;
+  }
+
+  .popup {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
 }

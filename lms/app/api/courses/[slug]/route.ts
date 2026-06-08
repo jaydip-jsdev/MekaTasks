@@ -6,6 +6,8 @@ import { NextRequest } from "next/server";
 import "@/app/models/LessonsModel";
 import { AdminAuth } from "@/lib/adminAuth";
 import { uploadToCloud } from "@/lib/cloudinary/UploadToCloud";
+import LessonsModel from "@/app/models/LessonsModel";
+import HistoryModel from "@/app/models/HistoryModel";
 
 export async function GET(
   req: NextRequest,
@@ -133,9 +135,25 @@ export async function DELETE(
 
     const { slug } = await context.params;
 
-    const course = await CourseModel.findOneAndDelete({ slug });
+    const course = await CourseModel.findOne({ slug });
 
     if (!course) return ApiError("Course not found", 404);
+
+    const lessons = await LessonsModel.find({
+      courseId: course._id,
+    }).select("_id");
+
+    const lessonIds = lessons.map((l) => l._id);
+
+    await HistoryModel.deleteMany({
+      lesson: { $in: lessonIds },
+    });
+
+    await LessonsModel.deleteMany({
+      courseId: course._id,
+    });
+
+    await CourseModel.findByIdAndDelete(course._id);
 
     return ApiSuccess("Course Deleted successfully");
   } catch (error) {

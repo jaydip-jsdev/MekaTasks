@@ -51,13 +51,16 @@ const HistoryPage = () => {
                     : "#"
                 }
               >
-                <img src="./course.webp" className={styles.thumbnail} />
+                <img
+                  src={h.lesson?.thumbnail || "./course.webp"}
+                  className={styles.thumbnail}
+                />
               </Link>
 
               <div className={styles.content}>
-                <h3 className={styles.lessonTitle}>{h.lesson.title}</h3>
+                <h3 className={styles.lessonTitle}>{h.lesson?.title}</h3>
 
-                <p className={styles.courseTitle}>{h.lesson.description}</p>
+                <p className={styles.courseTitle}>{h.lesson?.description}</p>
 
                 <p className={styles.watchedAt}>
                   Watched on {new Date(h.createdAt).toLocaleDateString()}

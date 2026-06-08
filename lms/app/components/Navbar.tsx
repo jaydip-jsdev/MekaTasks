@@ -11,8 +11,8 @@ import { toast } from "react-toastify";
 import { getErrorMessage } from "@/lib/ClientError";
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState<Boolean>(false);
-  const [authenticated, setAuthenticated] = useState<Boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [showLogoutBtn, setShowLogoutBtn] = useState<boolean>(false);
   const router = useRouter();
 
@@ -53,17 +53,29 @@ export default function Navbar() {
       </button>
       <ul className={`menu ${isOpen ? "open" : ""}`}>
         <li>
-          <Link href={routes.HOMEPAGE} className="link">
+          <Link
+            href={routes.HOMEPAGE}
+            className="link"
+            onClick={() => setIsOpen(false)}
+          >
             Home
           </Link>
         </li>
         <li className="link">
-          <Link href={routes.COURSESPAGE} className="link">
+          <Link
+            href={routes.COURSESPAGE}
+            className="link"
+            onClick={() => setIsOpen(false)}
+          >
             Course
           </Link>
         </li>
         <li className="link">
-          <Link href={routes.CATEGORIESPAGE} className="link">
+          <Link
+            href={routes.CATEGORIESPAGE}
+            className="link"
+            onClick={() => setIsOpen(false)}
+          >
             Categories
           </Link>
         </li>
@@ -73,10 +85,16 @@ export default function Navbar() {
               <p onClick={() => setShowLogoutBtn(!showLogoutBtn)}>Profile</p>
               {showLogoutBtn && (
                 <div className="popup">
-                  <Link href={routes.ENROLLED_COURSES}>
+                  <Link
+                    href={routes.ENROLLED_COURSES}
+                    onClick={() => setShowLogoutBtn(false)}
+                  >
                     <button className="enrolled-courses-btn">My Courses</button>
                   </Link>
-                  <Link href={routes.HISTORY}>
+                  <Link
+                    href={routes.HISTORY}
+                    onClick={() => setShowLogoutBtn(false)}
+                  >
                     <button className="history-btn enrolled-courses-btn">
                       History
                     </button>

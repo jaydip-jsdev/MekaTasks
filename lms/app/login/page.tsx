@@ -5,7 +5,7 @@ import { getErrorMessage } from "@/lib/ClientError";
 import routes from "@/lib/ClientRoutes/route";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 const LoginPage = () => {
