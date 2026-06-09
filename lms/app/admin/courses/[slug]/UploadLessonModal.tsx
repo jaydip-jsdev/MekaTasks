@@ -7,7 +7,7 @@ import {
   UploadLesson,
 } from "@/lib/axios/api";
 import { getErrorMessage } from "@/lib/ClientError";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 interface UploadLessonModalProps {
@@ -34,7 +34,8 @@ const UploadLessonModal = ({
     lessonUrl: "",
     courseId: "",
   });
-  const [publishing, setPublishing] = useState(false);
+  const [publishing, setPublishing] = useState<boolean>(false);
+  const [preview, setPreview] = useState<string>("");
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -105,9 +106,11 @@ const UploadLessonModal = ({
           title: lesson.title,
           description: lesson.description,
           slug: lesson.slug,
-          lessonUrl: lesson.lesson,
+          lessonUrl: lesson.video_url,
           courseId: lesson.courseId,
         }));
+
+        setPreview(lesson.thumbnail);
       }
     } catch (error) {
       console.log(error);
@@ -118,72 +121,120 @@ const UploadLessonModal = ({
     if (editingId) fetchLessonById();
   }, [editingId]);
 
+  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      setLessonData((prev) => ({
+        ...prev,
+        thumbnail: file || null,
+      }));
+
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleLessonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    setLessonData((prev) => ({
+      ...prev,
+      lesson: file,
+      lessonUrl: URL.createObjectURL(file),
+    }));
+  };
+
+  const lessonInputRef = useRef<HTMLInputElement>(null);
+
   return (
     <div className="modal">
       <form onSubmit={handleSubmit}>
         <button type="button" className="close-btn" onClick={handleClose}>
           ✕
         </button>{" "}
-        <div>
-          <label htmlFor="thumbnail">Lesson Thumbnail</label>
-          <input
-            type="file"
-            name="thumbnail"
-            placeholder="Enter Lesson Thumbnail"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
+        <div className="form-upload-lesson">
+          <div className="thumbnail-box">
+            <label htmlFor="thumbnail">
+              {preview ? (
+                <img src={preview} className="preview" />
+              ) : (
+                <div className="upload-placeholder">
+                  <span>Upload Thumbnail</span>
+                </div>
+              )}
+            </label>
+            <input
+              id="thumbnail"
+              type="file"
+              name="thumbnail"
+              accept="image/*"
+              placeholder="Upload thumbnail"
+              onChange={(e) => handleThumbnailChange(e)}
+              hidden
+            />
+          </div>
+          <div className="inputssss">
+            <div>
+              <label htmlFor="title">Lesson Title</label>
+              <input
+                type="text"
+                name="title"
+                placeholder="Enter Lesson Title"
+                onChange={(e) => handleInputChange(e)}
+                value={lessonData.title}
+              />
+            </div>
+            <div>
+              <label htmlFor="title">Lesson Description</label>
+              <input
+                type="text"
+                name="description"
+                placeholder="Enter Lesson Description"
+                onChange={(e) => handleInputChange(e)}
+                value={lessonData.description}
+              />
+            </div>
+            <div>
+              <label htmlFor="slug">Slug</label>
+              <input
+                type="text"
+                name="slug"
+                placeholder="Enter slug for SEO"
+                onChange={(e) => handleInputChange(e)}
+                value={lessonData.slug}
+              />
+            </div>
+          </div>
+          <div className="lesson-side">
+            <label>Lesson</label>
 
-              setLessonData((prev) => ({
-                ...prev,
-                thumbnail: file || null,
-              }));
-            }}
-          />
-        </div>
-        <div>
-          <label htmlFor="title">Lesson Title</label>
-          <input
-            type="text"
-            name="title"
-            placeholder="Enter Lesson Title"
-            onChange={(e) => handleInputChange(e)}
-            value={lessonData.title}
-          />
-        </div>
-        <div>
-          <label htmlFor="title">Lesson Description</label>
-          <input
-            type="text"
-            name="description"
-            placeholder="Enter Lesson Description"
-            onChange={(e) => handleInputChange(e)}
-            value={lessonData.description}
-          />
-        </div>
-        <div>
-          <label htmlFor="slug">Slug</label>
-          <input
-            type="text"
-            name="slug"
-            placeholder="Enter slug for SEO"
-            onChange={(e) => handleInputChange(e)}
-            value={lessonData.slug}
-          />
-        </div>
-        <div>
-          <label htmlFor="Lesson">Lesson</label>
-          <input
-            type="file"
-            name="lesson"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
+            <div
+              className="lesson-upload-box"
+              onClick={() => lessonInputRef.current?.click()}
+            >
+              {lessonData.lessonUrl ? (
+                <video
+                  src={lessonData.lessonUrl}
+                  controls
+                  className="lesson-prev"
+                />
+              ) : (
+                <div className="upload-placeholder">
+                  <span>Upload Lesson</span>
+                </div>
+              )}
+            </div>
 
-              setLessonData((prev) => ({
-                ...prev,
-                lesson: file || null,
-              }));
-            }}
-          />
+            <input
+              ref={lessonInputRef}
+              type="file"
+              accept="video/*"
+              hidden
+              onChange={handleLessonChange}
+            />
+          </div>
         </div>
         <div className="modal-action">
           <button>

@@ -30,6 +30,7 @@ const AddCourseModal = ({
     slug: "",
     category: "",
   });
+  const [preview, setPreview] = useState("");
 
   const getCourseData = async () => {
     try {
@@ -43,6 +44,8 @@ const AddCourseModal = ({
         slug: course.slug,
         category: course.category,
       }));
+
+      setPreview(course.thumbnail);
     } catch (error) {
       console.log(error);
     }
@@ -109,26 +112,43 @@ const AddCourseModal = ({
     setAddingCourse(false);
   };
 
+  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      setCourseData((prev) => ({
+        ...prev,
+        thumbnail: file || null,
+      }));
+
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
   return (
     <div className="modal">
       <form onSubmit={handleSubmit}>
         <button type="button" className="close-btn" onClick={handleClose}>
           ✕
         </button>{" "}
-        <div>
-          <label htmlFor="thumbnail">Course Thumbnail</label>
+        <div className="thumbnail-box">
+          <label htmlFor="thumbnail">
+            {preview ? (
+              <img src={preview} className="preview" />
+            ) : (
+              <div className="upload-placeholder">
+                <span>Upload Thumbnail</span>
+              </div>
+            )}
+          </label>
           <input
+            id="thumbnail"
             type="file"
             name="thumbnail"
+            accept="image/*"
             placeholder="Upload thumbnail"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-
-              setCourseData((prev) => ({
-                ...prev,
-                thumbnail: file || null,
-              }));
-            }}
+            onChange={(e) => handleThumbnailChange(e)}
+            hidden
           />
         </div>
         <div>
