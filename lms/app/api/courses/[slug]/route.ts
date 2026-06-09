@@ -31,7 +31,12 @@ export async function GET(
     return ApiError("Internal Server Error", 500);
   }
 }
-
+interface CourseUpdateData {
+  title?: string;
+  description?: string;
+  category?: string;
+  thumbnail?: string;
+}
 export async function PATCH(
   req: NextRequest,
   context: {
@@ -62,7 +67,7 @@ export async function PATCH(
     const category = formData.get("category") as string;
     const thumbnail = formData.get("thumbnail") as File | null;
 
-    const updateData: Record<string, any> = {};
+    const updateData: CourseUpdateData = {};
 
     if (title?.trim()) {
       updateData.title = title.trim();

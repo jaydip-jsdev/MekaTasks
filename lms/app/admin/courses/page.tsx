@@ -6,6 +6,8 @@ import Card from "@/app/components/card/Card";
 import { DeleteCourse, GetCourses } from "@/lib/axios/api";
 import AddCourseModal from "./AddCourseModal";
 import { Course } from "@/Types/courses";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/lib/ClientError";
 
 const CoursePage = () => {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -15,8 +17,11 @@ const CoursePage = () => {
   const getAllCourses = async () => {
     try {
       const response = await GetCourses();
-      setCourses(response.data.data);
-    } catch (error) {}
+      setCourses(response?.data?.data);
+    } catch (error) {
+      console.log(error);
+      toast.error(getErrorMessage(error));
+    }
   };
 
   useEffect(() => {

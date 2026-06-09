@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@/context/AuthContext";
 import { login } from "@/lib/axios/api";
 import { getErrorMessage } from "@/lib/ClientError";
 import routes from "@/lib/ClientRoutes/route";
@@ -14,6 +15,8 @@ const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const { setAuthenticated } = useAuth();
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -24,12 +27,13 @@ const LoginPage = () => {
 
     try {
       const response = await login(payload);
-      const user = response.data.user;
-
+      const user = response?.data?.user;
+      const admin = "admin";
       if (response.status === 200) {
-        if (user.role === "admin") {
+        if (user.role === admin) {
           router.push(routes.ADMIN_DASHBOARD);
         } else {
+          setAuthenticated(true);
           router.push(routes.HOMEPAGE);
         }
       }

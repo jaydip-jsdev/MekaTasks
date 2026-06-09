@@ -7,22 +7,16 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import styles from "./history.module.css";
-import { Lesson } from "@/Types/Lesson";
 import Link from "next/link";
-
-interface HistoryT {
-  _id: string;
-  lesson: Lesson;
-  createdAt: string;
-}
+import { History } from "@/Types/history";
 
 const HistoryPage = () => {
-  const [history, setHistory] = useState<HistoryT[]>([]);
+  const [history, setHistory] = useState<History[]>([]);
 
   const getHistoryFun = async () => {
     try {
       const response = await getHistory();
-      const data = response.data.data;
+      const data = response?.data?.data;
 
       if (response.status === 200) {
         setHistory(data);

@@ -35,7 +35,7 @@ const AddCourseModal = ({
   const getCourseData = async () => {
     try {
       const response = await getCourseDetails(editingSlug);
-      const course = response.data.data;
+      const course = response?.data?.data;
 
       setCourseData((p) => ({
         ...p,
@@ -99,8 +99,13 @@ const AddCourseModal = ({
   };
 
   const getCategories = async () => {
-    const response = await GetCategories();
-    setCategories(response.data.data);
+    try {
+      const response = await GetCategories();
+      setCategories(response?.data?.data);
+    } catch (error) {
+      console.log(error);
+      toast.error(getErrorMessage(error));
+    }
   };
 
   useEffect(() => {

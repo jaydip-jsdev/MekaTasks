@@ -4,31 +4,24 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import routes from "@/lib/ClientRoutes/route";
 import Link from "next/link";
-import isAuthenticated from "@/lib/CheckAuth/auth";
 import { logout } from "@/lib/axios/api";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "@/lib/ClientError";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [showLogoutBtn, setShowLogoutBtn] = useState<boolean>(false);
   const router = useRouter();
 
-  const checkAuth = async () => {
-    const auth = await isAuthenticated();
-    setAuthenticated(auth);
-  };
-
-  useEffect(() => {
-    checkAuth();
-  }, []);
+  const { authenticated, setAuthenticated } = useAuth();
 
   const handleLogout = async () => {
     try {
       const response = await logout();
       if (response.status === 200) {
+        setAuthenticated(false);
         router.push("/");
         setShowLogoutBtn(false);
       }

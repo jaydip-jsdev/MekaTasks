@@ -1,7 +1,7 @@
 "use client";
 
+import { useAuth } from "@/context/AuthContext";
 import { EnrollCourse, GetCourses } from "@/lib/axios/api";
-import isAuthenticated from "@/lib/CheckAuth/auth";
 import { getErrorMessage } from "@/lib/ClientError";
 import { Course } from "@/Types/courses";
 import { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ export const useCourses = (categoryId?: string): UseCoursesReturn => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const [authenticated, setAuthenticated] = useState<boolean>(false);
+  const { authenticated } = useAuth();
 
   const fetchCourses = async () => {
     try {
@@ -58,12 +58,6 @@ export const useCourses = (categoryId?: string): UseCoursesReturn => {
   };
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const auth = await isAuthenticated();
-      setAuthenticated(auth);
-    };
-
-    checkAuth();
     fetchCourses();
   }, [categoryId]);
 

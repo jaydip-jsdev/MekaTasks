@@ -60,16 +60,6 @@ const Sidebar = () => {
           <Users size={20} />
           <span>Categories</span>
         </Link>
-
-        {/* <Link
-          href="/admin/lessons"
-          className={`${styles.link} ${
-            pathname.startsWith("/admin/lessons") ? styles.active : ""
-          }`}
-        >
-          <PlayCircle size={20} />
-          <span>Lessons</span>
-        </Link> */}
       </nav>
       <div className={styles.logout}>
         <button onClick={handleLogout}>Logout</button>

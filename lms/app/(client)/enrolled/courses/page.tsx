@@ -15,7 +15,6 @@ const EnrolledCourses = () => {
   const fetchCourses = async () => {
     try {
       const response = await enrolledCourses();
-      console.log(response.data.data);
       setCourses(response.data.data);
     } catch (error) {
       console.log(error);

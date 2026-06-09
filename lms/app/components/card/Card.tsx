@@ -22,14 +22,15 @@ const Card = ({
     <div className={styles.card}>
       <img src={image} className={styles["card-img"]} alt={title} />
       {isAdmin && (
-        <button className={styles["edit-btn"]} onClick={onEdit}>
-          <Pencil />
-        </button>
-      )}
-      {isAdmin && (
-        <button className={styles["delete-btn"]} onClick={onDelete}>
-          <Trash2 />
-        </button>
+        <>
+          <button className={styles["edit-btn"]} onClick={onEdit}>
+            <Pencil />
+          </button>
+
+          <button className={styles["delete-btn"]} onClick={onDelete}>
+            <Trash2 />
+          </button>
+        </>
       )}
       <div className={styles.cardBody}>
         <div className={styles.cardHead}>

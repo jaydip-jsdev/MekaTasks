@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { VerifyToken } from "./jwt";
+import { TokenPayload } from "@/Types/TokenPayload";
 
 export const AdminAuth = (req: NextRequest) => {
   try {
@@ -17,11 +18,7 @@ export const AdminAuth = (req: NextRequest) => {
       };
     }
 
-    const decoded = VerifyToken(token) as {
-      id: string;
-      email: string;
-      role: string;
-    };
+    const decoded = VerifyToken(token) as TokenPayload;
 
     if (decoded.role !== "admin") {
       return {

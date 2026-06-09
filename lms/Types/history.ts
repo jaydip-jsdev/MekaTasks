@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { Lesson } from "./Lesson";
 
 export interface ILessonHistory {
   _id?: Types.ObjectId;
@@ -8,4 +9,10 @@ export interface ILessonHistory {
   watchedAt: Date;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface History {
+  _id: string;
+  lesson: Lesson;
+  createdAt: string;
 }

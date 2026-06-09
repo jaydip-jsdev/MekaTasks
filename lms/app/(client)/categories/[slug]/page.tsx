@@ -5,11 +5,11 @@ import { useParams } from "next/navigation";
 import { EnrollCourse, GetCategories, GetCourses } from "@/lib/axios/api";
 import style from "./style.module.css";
 import Card from "@/app/components/card/Card";
-import isAuthenticated from "@/lib/CheckAuth/auth";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "@/lib/ClientError";
 import { Course } from "@/Types/courses";
 import { Category } from "@/Types/category";
+import { useAuth } from "@/context/AuthContext";
 
 const CategoryDetaisPage = () => {
   const params = useParams();
@@ -17,7 +17,7 @@ const CategoryDetaisPage = () => {
   const [categoryName, setCategoryName] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [authenticated, setAuthenticated] = useState<boolean>(false);
+  const { authenticated } = useAuth();
 
   const fetchCourses = async () => {
     try {
@@ -32,7 +32,13 @@ const CategoryDetaisPage = () => {
       }
 
       const response = await GetCategories();
-      const categories = response.data.data;
+
+      const categories = response?.data?.data;
+
+      if (!Array.isArray(categories)) {
+        setError("Failed to load categories");
+        return;
+      }
 
       const category = categories.find(
         (cat: Category) => cat.slug === categorySlug,
@@ -58,15 +64,6 @@ const CategoryDetaisPage = () => {
   useEffect(() => {
     fetchCourses();
   }, [params?.slug]);
-
-  const checkAuthentication = async () => {
-    const auth = await isAuthenticated();
-    setAuthenticated(auth);
-  };
-
-  useEffect(() => {
-    checkAuthentication();
-  }, []);
 
   const handleEnroll = async (courseId: string) => {
     try {
