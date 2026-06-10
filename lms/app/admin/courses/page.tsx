@@ -17,7 +17,14 @@ const CoursePage = () => {
   const getAllCourses = async () => {
     try {
       const response = await GetCourses();
-      setCourses(response?.data?.data);
+      const courses = response?.data?.data;
+
+      if (!courses) {
+        toast.error("Courses not found");
+        return;
+      }
+
+      setCourses(courses);
     } catch (error) {
       console.log(error);
       toast.error(getErrorMessage(error));

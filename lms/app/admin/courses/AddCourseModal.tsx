@@ -37,6 +37,10 @@ const AddCourseModal = ({
       const response = await getCourseDetails(editingSlug);
       const course = response?.data?.data;
 
+      if (!course) {
+        toast.error("Courses not found");
+        return;
+      }
       setCourseData((p) => ({
         ...p,
         title: course.title,
@@ -101,7 +105,12 @@ const AddCourseModal = ({
   const getCategories = async () => {
     try {
       const response = await GetCategories();
-      setCategories(response?.data?.data);
+      const cats = response?.data?.data;
+      if (!cats) {
+        toast.error("Categories not found");
+        return;
+      }
+      setCategories(cats);
     } catch (error) {
       console.log(error);
       toast.error(getErrorMessage(error));

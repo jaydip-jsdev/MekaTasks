@@ -18,6 +18,11 @@ const HistoryPage = () => {
       const response = await getHistory();
       const data = response?.data?.data;
 
+      if (!Array.isArray(data)) {
+        toast.error("History Not Found");
+        return;
+      }
+
       if (response.status === 200) {
         setHistory(data);
       }
