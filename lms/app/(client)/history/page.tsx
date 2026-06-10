@@ -1,6 +1,5 @@
 "use client";
 
-import Card from "@/app/components/card/Card";
 import { getHistory } from "@/lib/axios/api";
 import { getErrorMessage } from "@/lib/ClientError";
 import React, { useEffect, useState } from "react";
@@ -9,6 +8,7 @@ import { toast } from "react-toastify";
 import styles from "./history.module.css";
 import Link from "next/link";
 import { History } from "@/Types/history";
+import { Lesson } from "@/Types/Lesson";
 
 const HistoryPage = () => {
   const [history, setHistory] = useState<History[]>([]);
@@ -30,38 +30,43 @@ const HistoryPage = () => {
     getHistoryFun();
   }, []);
 
+  const getCourseSlug = (courseId: Lesson["courseId"]) => {
+    if (courseId && typeof courseId === "object" && "slug" in courseId) {
+      return courseId.slug;
+    }
+
+    return null;
+  };
+
   return (
     <div className="wrapper">
       <h1>History Page</h1>
 
       <div className="card-container">
         {history.length > 0 ? (
-          history.map((h) => (
-            <div key={h._id} className={styles.historyItem}>
-              <Link
-                href={
-                  (h.lesson?.courseId as { slug: string } | null)?.slug
-                    ? `/courses/${(h.lesson?.courseId as { slug: string }).slug}`
-                    : "#"
-                }
-              >
-                <img
-                  src={h.lesson?.thumbnail || "./course.webp"}
-                  className={styles.thumbnail}
-                />
-              </Link>
+          history.map((h) => {
+            const slug = getCourseSlug(h.lesson?.courseId);
+            return (
+              <div key={h._id} className={styles.historyItem}>
+                <Link href={slug ? `/courses/${slug}` : "#"}>
+                  <img
+                    src={h.lesson?.thumbnail || "./course.webp"}
+                    className={styles.thumbnail}
+                  />
+                </Link>
 
-              <div className={styles.content}>
-                <h3 className={styles.lessonTitle}>{h.lesson?.title}</h3>
+                <div className={styles.content}>
+                  <h3 className={styles.lessonTitle}>{h.lesson?.title}</h3>
 
-                <p className={styles.courseTitle}>{h.lesson?.description}</p>
+                  <p className={styles.courseTitle}>{h.lesson?.description}</p>
 
-                <p className={styles.watchedAt}>
-                  Watched on {new Date(h.createdAt).toLocaleDateString()}
-                </p>
+                  <p className={styles.watchedAt}>
+                    Watched on {new Date(h.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))
+            );
+          })
         ) : (
           <p>History not found</p>
         )}

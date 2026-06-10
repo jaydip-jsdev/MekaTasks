@@ -20,3 +20,9 @@ export interface Course {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface CourseRef {
+  _id: string;
+  slug: string;
+  title?: string;
+}

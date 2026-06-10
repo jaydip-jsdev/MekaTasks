@@ -13,7 +13,7 @@ interface AddCourseModalProps {
   setAddingCourse: React.Dispatch<React.SetStateAction<boolean>>;
   fetchCourses: () => Promise<void>;
   editingSlug: string;
-  setEditing?: React.Dispatch<React.SetStateAction<string>>;
+  setEditing: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const AddCourseModal = ({
@@ -90,7 +90,7 @@ const AddCourseModal = ({
 
       if (response.status === 200) {
         await fetchCourses();
-        setEditing?.("");
+        setEditing("");
         setAddingCourse(false);
       }
     } catch (error) {
