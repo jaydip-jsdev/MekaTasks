@@ -1,0 +1,47 @@
+### register user
+POST http://localhost:3000/api/register
+Content-Type: application/json
+
+{
+    "name": "Yasin Memon",
+    "email": "memonyasin1212@gmail.com",
+    "password": "1234"
+}
+
+### login user
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+    "email": "memonyasin1212@gmail.com",
+    "password": "1234"
+}
+
+### logout user
+POST http://localhost:3000/api/logout
+Content-Type: application/json
+
+### Get blogs
+GET http://localhost:3000/api/blog
+
+### create blogs
+POST http://localhost:3000/api/blog/create
+Content-type: "application/json"
+
+{
+    "title" : "jd test ",
+    "description" : "Learn Next.js",
+    "content": "test teste testv"
+}
+
+### edit blog
+PATCH  http://localhost:3000/api/blog/edit/6a157e2120dab3500a3c6767
+Content-Type: application/json
+
+{
+    "title" : "Appsile",
+    "description" : "edited blog"
+}
+
+### delete blog
+DELETE http://localhost:3000/api/blog/delete/6a157e2120dab3500a3c6767

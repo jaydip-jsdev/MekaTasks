@@ -1,0 +1,73 @@
+.hero {
+  min-height: 84vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    justify-content: center;
+    flex-direction: column-reverse;
+    gap: 5px;
+  }
+}
+
+.hero-title {
+  font-size: 3vw;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+@media (max-width: 900px) {
+  .hero-title {
+    font-size: 6vw;
+  }
+}
+
+.right-side-hero img {
+  border: 1px solid black;
+  width: 30vw;
+  box-shadow: 0 1px 10px black;
+  border-radius: 10%;
+}
+
+@media (max-width: 900px) {
+  .right-side-hero img {
+    width: 80vw;
+    margin-bottom: 14px;
+  }
+}
+
+.hero-actions {
+  display: flex;
+  gap: 2vw;
+}
+
+@media (max-width: 900px) {
+  .hero-actions {
+    justify-content: center;
+  }
+}
+
+.hero-actions button {
+  padding: 1vh 2vw;
+  border-radius: 1rem;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+@media (max-width: 900px) {
+  .hero-actions button {
+    padding: 6px 40px;
+    margin-top: 10px;
+  }
+}
+
+.hero-actions button:first-child {
+  background-color: aqua;
+}
+
+.hero-actions button:nth-child(2) {
+  background-color: blue;
+}

@@ -1,0 +1,111 @@
+.logo {
+  font-weight: bold;
+  font-size: 2rem;
+  color: blue;
+  text-decoration: none;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 80px;
+  background-color: rgb(213, 213, 207);
+  position: relative;
+}
+
+.nav-menus {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  align-items: center;
+}
+
+.nav-menus li {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.nav-menus li:hover {
+  color: blue;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.login-btn-nav {
+  background-color: blue;
+  color: white;
+  padding: 8px 20px;
+  font-weight: bold;
+  border-radius: 1em;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-profile {
+  background-color: blue;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.mobile-menu a,
+.mobile-menu span {
+  font-weight: 700;
+  text-decoration: none;
+  color: black;
+}
+
+.mobile-menu a:hover {
+  color: blue;
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    padding: 15px 20px;
+  }
+
+  .nav-menus,
+  .desktop-actions {
+    display: none;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+}

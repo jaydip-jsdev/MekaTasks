@@ -1,0 +1,38 @@
+.add-blog-form {
+  width: 80%;
+  margin: auto;
+}
+
+.blog-title-label {
+  font-weight: bold;
+}
+
+.blog-title {
+  display: block;
+  border: 1px solid black;
+  width: 100%;
+  margin-top: 2px;
+  padding: 2px 3px;
+  border-radius: 0.3rem;
+  margin-bottom: 4vh;
+}
+
+.blog-title:focus {
+  outline: none;
+}
+
+.post-blog {
+    background-color: blue;
+    color: white;
+    padding: 4px 28px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 1rem;
+}
+
+.blog-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+}
