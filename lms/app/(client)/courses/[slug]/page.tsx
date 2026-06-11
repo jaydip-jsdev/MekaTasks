@@ -27,7 +27,10 @@ const CourseDetailsPage = () => {
     try {
       const response = await getCourseDetails(slug);
       const data: Course = response.data.data;
-      setCourseDetails(data);
+
+      if (data) {
+        setCourseDetails(data);
+      }
 
       if (data?.lessons?.length > 0) {
         await recordHistory(data.lessons[0]._id);
@@ -46,7 +49,12 @@ const CourseDetailsPage = () => {
 
   const handleLessonSelect = async (index: number, lessonId: string) => {
     setSelectedLesson(index);
-    await recordHistory(lessonId);
+    try {
+      await recordHistory(lessonId);
+    } catch (error) {
+      // we don't need to show this error to the use that's why i am consoling this only for developers it's background process
+      console.log(error);
+    }
   };
 
   if (!courseDetails) {

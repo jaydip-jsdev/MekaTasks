@@ -51,7 +51,7 @@ const AddCourseModal = ({
 
       setPreview(course.thumbnail);
     } catch (error) {
-      console.log(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
@@ -112,7 +112,6 @@ const AddCourseModal = ({
       }
       setCategories(cats);
     } catch (error) {
-      console.log(error);
       toast.error(getErrorMessage(error));
     }
   };

@@ -14,7 +14,8 @@ const CategoriesPage = () => {
   const fetchCategories = async () => {
     try {
       const response = await GetCategories();
-      const data = response.data.data;
+      const data = response?.data?.data;
+      
       if (response.status === 200) {
         setCats(data);
       }

@@ -28,7 +28,9 @@ export default function SearchResults({
     setQuery(query);
 
     const response = await GetCourses(undefined, query);
-    setCourses(response.data.data);
+    if (response.data.data) {
+      setCourses(response.data.data);
+    }
   };
 
   useEffect(() => {

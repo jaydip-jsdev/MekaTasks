@@ -52,8 +52,9 @@ const CategoryDetaisPage = () => {
       setCategoryName(category.name);
 
       const res = await GetCourses(category._id);
-
-      setCourses(res.data.data || []);
+      if (res?.data?.data) {
+        setCourses(res.data.data || []);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {

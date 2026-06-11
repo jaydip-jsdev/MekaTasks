@@ -28,7 +28,9 @@ export const useCourses = (categoryId?: string): UseCoursesReturn => {
       setError("");
 
       const res = await GetCourses(categoryId);
-      setCourses(res.data.data);
+      if (res.data.data) {
+        setCourses(res.data.data);
+      }
     } catch (error: any) {
       setError(
         error.response?.data?.message ||
