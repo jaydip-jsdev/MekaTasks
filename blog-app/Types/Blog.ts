@@ -1,5 +1,4 @@
 export interface Blog {
-  id: string;
   _id: string;
   title: string;
   desc: string;
