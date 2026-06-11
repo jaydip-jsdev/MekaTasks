@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import "./blogDetails.css";
 import Footer from "@/app/components/global/Footer/Footer";
 import { Blog } from "@/Types/Blog";
-import { GetBlogById } from "@/services/api";
+import { GetBlogById } from "@/server/services/api";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "@/lib/ErrorMessage";
 

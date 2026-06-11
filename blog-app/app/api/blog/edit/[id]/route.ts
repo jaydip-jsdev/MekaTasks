@@ -1,11 +1,11 @@
-import { verifyToken } from "@/lib/jwt";
-import { ConnectDb } from "@/lib/monogoose";
+import { verifyToken } from "@/server/jwt";
+import { ConnectDb } from "@/server/monogoose";
 import Blog from "@/models/blog";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await ConnectDb();

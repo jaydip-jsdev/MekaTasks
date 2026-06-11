@@ -1,5 +1,5 @@
 import Blog from "@/models/blog";
-import { ConnectDb } from "@/lib/monogoose";
+import { ConnectDb } from "@/server/monogoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(

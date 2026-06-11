@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import "./Featured.css";
 import Card from "../../reusable/Card/Card";
 import { Blog } from "@/Types/Blog";
-import { GetAllBlogs } from "@/services/api";
+import { GetAllBlogs } from "@/server/services/api";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "@/lib/ErrorMessage";
 

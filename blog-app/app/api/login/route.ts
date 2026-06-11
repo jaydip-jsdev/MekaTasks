@@ -1,5 +1,5 @@
-import { generateToken } from "@/lib/jwt";
-import { ConnectDb } from "@/lib/monogoose";
+import { generateToken } from "@/server/jwt";
+import { ConnectDb } from "@/server/monogoose";
 import User from "@/models/user";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";

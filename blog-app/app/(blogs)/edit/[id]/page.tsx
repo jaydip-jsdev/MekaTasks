@@ -6,7 +6,7 @@ import Tiptap from "@/app/components/reusable/TextEditor/TextEditor";
 import "../../add/add.css";
 import Navbar from "@/app/components/global/Navbar/Navbar";
 import Footer from "@/app/components/global/Footer/Footer";
-import { GetBlogById, UpdateBlog } from "@/services/api";
+import { GetBlogById, UpdateBlog } from "@/server/services/api";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "@/lib/ErrorMessage";
 import ClientRoutes from "@/app/ClientRoutes";

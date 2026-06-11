@@ -1,4 +1,4 @@
-import { ConnectDb } from "@/lib/monogoose";
+import { ConnectDb } from "@/server/monogoose";
 import blog from "@/models/blog";
 import { NextRequest, NextResponse } from "next/server";
 

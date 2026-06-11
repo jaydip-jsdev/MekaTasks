@@ -1,44 +1,56 @@
 "use client";
 
 import React, { useState } from "react";
-import "./login.css";
+import "../login/login.css";
 import { useRouter } from "next/navigation";
-import { Login } from "@/services/api";
+import { Register } from "@/server/services/api";
+import ClientRoutes from "../../ClientRoutes";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "@/lib/ErrorMessage";
-import ClientRoutes from "../ClientRoutes";
 
-const LoginPage = () => {
+const RegisterPage = () => {
+  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
 
       const payload = {
+        name,
         email,
         password,
       };
 
-      const { data } = await Login(payload);
+      const { data } = await Register(payload);
 
       if (data.success) {
-        router.push(ClientRoutes.HOMEPAGE);
+        router.push(ClientRoutes.LOGINPAGE);
       } else {
-        toast.error(data.message || "Login failed");
+        toast.error(data.message);
       }
     } catch (error) {
       toast.error(getErrorMessage(error));
     }
   };
+
   return (
-    <form action="" className="login-form" onSubmit={handleLogin}>
+    <form action="" className="login-form" onSubmit={handleRegister}>
       <div className="form-content">
-        <h2 className="login-title">Login</h2>
+        <h2 className="login-title">Register</h2>
         <div>
+          <div className="login-input-group">
+            <label htmlFor="">Name</label>
+            <input
+              className="login-input"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
           <div className="login-input-group">
             <label htmlFor="">Email</label>
             <input
@@ -58,9 +70,7 @@ const LoginPage = () => {
             />
           </div>
           <div className="login-action">
-            <button className="login-page-btn" type="submit">
-              Login
-            </button>
+            <button className="login-page-btn">Register</button>
           </div>
         </div>
       </div>
@@ -68,4 +78,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

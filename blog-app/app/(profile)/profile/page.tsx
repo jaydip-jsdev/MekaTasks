@@ -3,14 +3,14 @@
 import React, { useEffect, useState } from "react";
 import "./profile.css";
 import Link from "next/link";
-import Navbar from "../components/global/Navbar/Navbar";
+import Navbar from "../../components/global/Navbar/Navbar";
 import { useRouter } from "next/navigation";
-import Footer from "../components/global/Footer/Footer";
+import Footer from "../../components/global/Footer/Footer";
 import { Blog } from "@/Types/Blog";
-import { DeleteBlog, GetMyBlogs, Logout } from "@/services/api";
+import { DeleteBlog, GetMyBlogs, Logout } from "@/server/services/api";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "@/lib/ErrorMessage";
-import ClientRoutes from "../ClientRoutes";
+import ClientRoutes from "../../ClientRoutes";
 
 const ProfilePage = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);

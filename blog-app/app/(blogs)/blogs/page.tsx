@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/global/Navbar/Navbar";
-import Card from "../components/reusable/Card/Card";
 import "./Blogs.css";
-import Footer from "../components/global/Footer/Footer";
 import { Blog } from "@/Types/Blog";
-import { GetAllBlogs } from "@/services/api";
+import { GetAllBlogs } from "@/server/services/api";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "@/lib/ErrorMessage";
+import Navbar from "@/app/components/global/Navbar/Navbar";
+import Card from "@/app/components/reusable/Card/Card";
+import Footer from "@/app/components/global/Footer/Footer";
 
 const BlogsPage = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);

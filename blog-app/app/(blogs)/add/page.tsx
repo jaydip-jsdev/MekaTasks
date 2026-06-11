@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import Tiptap from "../components/reusable/TextEditor/TextEditor";
+import Tiptap from "../../components/reusable/TextEditor/TextEditor";
 import "./add.css";
 import { useRouter } from "next/navigation";
-import Navbar from "../components/global/Navbar/Navbar";
-import Footer from "../components/global/Footer/Footer";
-import ClientRoutes from "../ClientRoutes";
-import { AddNewBlog } from "@/services/api";
+import Navbar from "../../components/global/Navbar/Navbar";
+import Footer from "../../components/global/Footer/Footer";
+import ClientRoutes from "../../ClientRoutes";
+import { AddNewBlog } from "@/server/services/api";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "@/lib/ErrorMessage";
 

@@ -1,14 +1,15 @@
-import { verifyToken } from "@/lib/jwt";
-import { ConnectDb } from "@/lib/monogoose";
+import { verifyToken } from "@/server/jwt";
+import { ConnectDb } from "@/server/monogoose";
 import Blog from "@/models/blog";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await ConnectDb();
+    const { id } = await params;
 
     const token = req.cookies.get("token")?.value;
     if (!token) {
@@ -22,7 +23,6 @@ export async function DELETE(
     }
 
     const decoded = verifyToken(token);
-    const { id } = await params;
 
     const blog = await Blog.findById(id);
 
