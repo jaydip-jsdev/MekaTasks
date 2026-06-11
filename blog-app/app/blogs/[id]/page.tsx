@@ -1,10 +1,10 @@
 "use client";
 
-import Navbar from "@/app/components/Navbar/Navbar";
+import Navbar from "@/app/components/global/Navbar/Navbar";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import "./blogDetails.css";
-import Footer from "@/app/components/Footer/Footer";
+import Footer from "@/app/components/global/Footer/Footer";
 import { Blog } from "@/Types/Blog";
 import { GetBlogById } from "@/services/api";
 import { toast } from "react-toastify";
@@ -25,7 +25,6 @@ const BlogDetailPage = () => {
       }
     } catch (error) {
       toast.error(getErrorMessage(error));
-      console.log(error);
     }
   };
 

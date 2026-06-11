@@ -1,52 +1,41 @@
-import axios from "axios";
+import { BlogPayload } from "@/Types/Blog";
+import { loginPayload, registerPayload } from "@/Types/authPayload";
 
-const api = axios.create({
-  baseURL: "http://localhost:3000/api/",
-  withCredentials: true,
-});
+import api from "./axios";
+import endpoints from "./endpoints";
 
-interface BlogPayload {
-  title: string;
-  description: string;
-  content: string;
-}
-
-export const Register = (data: {
-  name: string;
-  email: string;
-  password: string;
-}) => {
-  return api.post("register", data);
+export const Register = (data: registerPayload) => {
+  return api.post(endpoints.register, data);
 };
 
-export const Login = (data: { email: string; password: string }) => {
-  return api.post("login", data);
+export const Login = (data: loginPayload) => {
+  return api.post(endpoints.login, data);
 };
 
 export const Logout = () => {
-  return api.post("logout");
+  return api.post(endpoints.logout);
 };
 
 export const GetAllBlogs = () => {
-  return api.get("blog");
+  return api.get(endpoints.blog);
 };
 
 export const GetBlogById = (id: string) => {
-  return api.get("blog/" + id);
+  return api.get(`${endpoints.blogById}${id}`);
 };
 
 export const GetMyBlogs = () => {
-  return api.get("blog/my");
+  return api.get(endpoints.myBlogs);
 };
 
 export const AddNewBlog = (data: BlogPayload) => {
-  return api.post("blog/create", data);
+  return api.post(endpoints.createBlog, data);
 };
 
 export const UpdateBlog = (id: string, data: BlogPayload) => {
-  return api.patch("blog/edit/" + id, data);
+  return api.patch(`${endpoints.updateBlog}${id}`, data);
 };
 
 export const DeleteBlog = (id: string) => {
-  return api.delete("blog/delete/" + id);
+  return api.delete(`${endpoints.deleteBlog}${id}`);
 };

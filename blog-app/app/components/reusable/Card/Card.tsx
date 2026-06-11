@@ -1,14 +1,7 @@
-import React from "react";
 import "./Card.css";
 import Link from "next/link";
 import ClientRoutes from "@/app/ClientRoutes";
-import { Blog } from "@/Types/Blog";
-
-interface CardProps {
-  id: string;
-  title: string;
-  desc: string;
-}
+import { CardProps } from "@/Types/CardProps";
 
 const Card = ({ id, title, desc }: CardProps) => {
   return (

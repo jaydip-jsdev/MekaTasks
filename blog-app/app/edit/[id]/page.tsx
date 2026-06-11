@@ -2,13 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Tiptap from "@/app/components/TextEditor/TextEditor";
+import Tiptap from "@/app/components/reusable/TextEditor/TextEditor";
 import "../../add/add.css";
-import Navbar from "@/app/components/Navbar/Navbar";
-import Footer from "@/app/components/Footer/Footer";
+import Navbar from "@/app/components/global/Navbar/Navbar";
+import Footer from "@/app/components/global/Footer/Footer";
 import { GetBlogById, UpdateBlog } from "@/services/api";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "@/lib/ErrorMessage";
+import ClientRoutes from "@/app/ClientRoutes";
 
 const EditBlog = () => {
   const { id } = useParams();
@@ -28,10 +29,10 @@ const EditBlog = () => {
         setDescription(data.data.description);
         setContent(data.data.content);
       } else {
-        alert(data.message);
+        toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
@@ -43,7 +44,7 @@ const EditBlog = () => {
     e.preventDefault();
 
     if (!title || !description || !content) {
-      alert("All fields are required");
+      toast.error("All fields are required");
       return;
     }
 
@@ -58,19 +59,18 @@ const EditBlog = () => {
       const data = response.data;
 
       if (data.success) {
-        alert("Blog updated successfully");
-        router.push("/profile");
+        toast.success("Blog updated successfully");
+        router.push(ClientRoutes.PROFILE);
       } else {
-        alert(data.message);
+        toast.error(data.message);
       }
 
       if (response.status === 401) {
-        router.push("/login");
+        router.push(ClientRoutes.LOGINPAGE);
         return;
       }
     } catch (error) {
       toast.error(getErrorMessage(error));
-      console.log(error);
     }
   };
 

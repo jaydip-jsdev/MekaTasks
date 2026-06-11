@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./Featured.css";
-import Card from "../Card/Card";
+import Card from "../../reusable/Card/Card";
 import { Blog } from "@/Types/Blog";
 import { GetAllBlogs } from "@/services/api";
 import { toast } from "react-toastify";
@@ -14,11 +14,14 @@ const Featured = () => {
   const GetFeaturedBlogs = async () => {
     try {
       const response = await GetAllBlogs();
-      const data = response.data.data;
-      if (data) setBlogs(data);
-    } catch (error: unknown) {
+      const data = response?.data?.data;
+      if (!data) {
+        toast.error("Data not found");
+        return;
+      }
+      setBlogs(data);
+    } catch (error) {
       toast.error(getErrorMessage(error));
-      console.log("Something went wrong" + error);
     }
   };
 

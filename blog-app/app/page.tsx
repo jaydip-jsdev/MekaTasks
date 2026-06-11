@@ -1,11 +1,9 @@
-import Image from "next/image";
-import React from "react";
-import Navbar from "./components/Navbar/Navbar";
-import Hero from "./components/Hero/Hero";
-import Featured from "./components/Featured/Featured";
-import Container from "./components/Container/Container";
-import Footer from "./components/Footer/Footer";
-import CTA from "./components/CTA/CTA";
+import Navbar from "./components/global/Navbar/Navbar";
+import Hero from "./components/HomePage/Hero/Hero";
+import Featured from "./components/HomePage/Featured/Featured";
+import Container from "./components/reusable/Container/Container";
+import Footer from "./components/global/Footer/Footer";
+import CTA from "./components/HomePage/CTA/CTA";
 
 const HomePage = () => {
   return (

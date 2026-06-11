@@ -8,6 +8,13 @@ export async function POST(req: NextRequest) {
   try {
     await ConnectDb();
     const { email, password } = await req.json();
+
+    if (!email || !password)
+      return NextResponse.json({
+        success: false,
+        message: "email & password are required",
+      });
+
     const exist = await User.findOne({ email }).select("+password");
     if (!exist) {
       return NextResponse.json({

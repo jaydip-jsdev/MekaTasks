@@ -1,8 +1,7 @@
 import Image from "next/image";
-import React from "react";
 import "./Hero.css";
 import Link from "next/link";
-import ClientRoutes from "@/app/ClientRoutes";
+import { btns } from "./HeroConst";
 
 const Hero = () => {
   return (
@@ -11,12 +10,13 @@ const Hero = () => {
         <p className="hero-title">Stories That inspire.</p>
         <p className="hero-title">Knowledge that empowers</p>
         <div className="hero-actions">
-          <Link href={ClientRoutes.BLOGS}>
-            <button>Explore</button>
-          </Link>
-          <Link href={ClientRoutes.ADD}>
-            <button>Add</button>
-          </Link>
+          {btns.map((btn) => {
+            return (
+              <Link key={btn.link} href={btn.link}>
+                <button>{btn.text}</button>
+              </Link>
+            );
+          })}
         </div>
       </div>
       <div className="right-side-hero">

@@ -10,3 +10,9 @@ export interface Blog {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface BlogPayload {
+  title: string;
+  description: string;
+  content: string;
+}

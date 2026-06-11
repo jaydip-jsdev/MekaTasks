@@ -1,9 +1,5 @@
+import { TokenPayload } from "@/Types/token";
 import jwt from "jsonwebtoken";
-
-interface TokenPayload {
-  userId: string;
-  email: string;
-}
 
 export const generateToken = (payload: object) => {
   return jwt.sign(payload, process.env.jwt_secret!, {

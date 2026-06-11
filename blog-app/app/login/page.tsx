@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Login } from "@/services/api";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "@/lib/ErrorMessage";
+import ClientRoutes from "../ClientRoutes";
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -25,13 +26,12 @@ const LoginPage = () => {
       const { data } = await Login(payload);
 
       if (data.success) {
-        router.push("/");
+        router.push(ClientRoutes.HOMEPAGE);
       } else {
         toast.error(data.message || "Login failed");
       }
     } catch (error) {
       toast.error(getErrorMessage(error));
-      console.log(error);
     }
   };
   return (

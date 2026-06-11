@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import "../login/login.css";
 import { useRouter } from "next/navigation";
 import { Register } from "@/services/api";
+import ClientRoutes from "../ClientRoutes";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/lib/ErrorMessage";
 
 const RegisterPage = () => {
   const [name, setName] = useState<string>("");
@@ -21,14 +24,16 @@ const RegisterPage = () => {
         email,
         password,
       };
+
       const { data } = await Register(payload);
+      
       if (data.success) {
-        router.push("/login");
+        router.push(ClientRoutes.LOGINPAGE);
       } else {
-        alert(data.message);
+        toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
+      toast.error(getErrorMessage(error));
     }
   };
 

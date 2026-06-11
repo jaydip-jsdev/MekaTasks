@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import Tiptap from "../components/TextEditor/TextEditor";
+import Tiptap from "../components/reusable/TextEditor/TextEditor";
 import "./add.css";
 import { useRouter } from "next/navigation";
-import Navbar from "../components/Navbar/Navbar";
-import Footer from "../components/Footer/Footer";
+import Navbar from "../components/global/Navbar/Navbar";
+import Footer from "../components/global/Footer/Footer";
 import ClientRoutes from "../ClientRoutes";
 import { AddNewBlog } from "@/services/api";
 import { toast } from "react-toastify";
@@ -31,7 +31,7 @@ const AddBlogPage = () => {
       const response = await AddNewBlog(payload);
 
       if (response.status === 401) {
-        window.location.href = ClientRoutes.LOGINPAGE;
+        router.push(ClientRoutes.LOGINPAGE);
         return;
       }
 
@@ -40,9 +40,8 @@ const AddBlogPage = () => {
       setContent("");
 
       router.push(ClientRoutes.PROFILE);
-    } catch (error: unknown) {
+    } catch (error) {
       toast.error(getErrorMessage(error));
-      console.log(error);
     }
   };
 

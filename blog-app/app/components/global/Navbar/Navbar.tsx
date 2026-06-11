@@ -6,6 +6,7 @@ import Link from "next/link";
 import { isAuthenticated } from "@/lib/auth";
 import { Menu, X } from "lucide-react";
 import ClientRoutes from "@/app/ClientRoutes";
+import { authRoutes, navItems } from "./NavItems";
 
 const Navbar = () => {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
@@ -27,13 +28,13 @@ const Navbar = () => {
       </Link>
 
       <ul className="nav-menus">
-        <li>
-          <Link href={ClientRoutes.HOMEPAGE}>Home</Link>
-        </li>
-        <li>Category</li>
-        <li>
-          <Link href={ClientRoutes.BLOGS}>Blogs</Link>
-        </li>
+        {navItems.map((item, index) => {
+          return (
+            <li key={item.link}>
+              <Link href={item.link}>{item.name}</Link>
+            </li>
+          );
+        })}
       </ul>
 
       <div className="nav-actions desktop-actions">
@@ -43,12 +44,13 @@ const Navbar = () => {
           </Link>
         ) : (
           <>
-            <Link href={ClientRoutes.LOGINPAGE}>
-              <button className="login-btn-nav">Login</button>
-            </Link>
-            <Link href={ClientRoutes.REGISTERPAGE}>
-              <button className="login-btn-nav">Register</button>
-            </Link>
+            {authRoutes.map((items, index) => {
+              return (
+                <Link key={index} href={items.link}>
+                  <button className="login-btn-nav">{items.name}</button>
+                </Link>
+              );
+            })}
           </>
         )}
       </div>
@@ -59,14 +61,17 @@ const Navbar = () => {
 
       {menuOpen && (
         <div className="mobile-menu">
-          <Link href={ClientRoutes.HOMEPAGE} onClick={() => setMenuOpen(false)}>
-            Home
-          </Link>
-          <Link href={ClientRoutes.BLOGS} onClick={() => setMenuOpen(false)}>
-            Blogs
-          </Link>
-          <span>Category</span>
-
+          {navItems.map((item, index) => {
+            return (
+              <Link
+                key={index}
+                href={item.link}
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
           {authenticated ? (
             <Link
               href={ClientRoutes.PROFILE}
@@ -76,18 +81,13 @@ const Navbar = () => {
             </Link>
           ) : (
             <>
-              <Link
-                href={ClientRoutes.LOGINPAGE}
-                onClick={() => setMenuOpen(false)}
-              >
-                Login
-              </Link>
-              <Link
-                href={ClientRoutes.REGISTERPAGE}
-                onClick={() => setMenuOpen(false)}
-              >
-                Register
-              </Link>
+              {authRoutes.map((item) => {
+                return (
+                  <Link href={item.link} onClick={() => setMenuOpen(false)}>
+                    {item.name}
+                  </Link>
+                );
+              })}
             </>
           )}
         </div>

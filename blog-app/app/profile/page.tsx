@@ -3,11 +3,14 @@
 import React, { useEffect, useState } from "react";
 import "./profile.css";
 import Link from "next/link";
-import Navbar from "../components/Navbar/Navbar";
+import Navbar from "../components/global/Navbar/Navbar";
 import { useRouter } from "next/navigation";
-import Footer from "../components/Footer/Footer";
+import Footer from "../components/global/Footer/Footer";
 import { Blog } from "@/Types/Blog";
 import { DeleteBlog, GetMyBlogs, Logout } from "@/services/api";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "@/lib/ErrorMessage";
+import ClientRoutes from "../ClientRoutes";
 
 const ProfilePage = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -16,9 +19,14 @@ const ProfilePage = () => {
   const getMyBlogs = async () => {
     try {
       const { data } = await GetMyBlogs();
-      setBlogs(data.data);
+      const myBlogs = data?.data;
+      if (!myBlogs) {
+        toast.error("Blogs not found");
+        return;
+      }
+      setBlogs(myBlogs);
     } catch (error) {
-      console.log(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
@@ -31,19 +39,24 @@ const ProfilePage = () => {
       const { data } = await Logout();
 
       if (data.success) {
-        router.push("/login");
+        router.push(ClientRoutes.LOGINPAGE);
       }
     } catch (error) {
-      console.log(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
   const handleDelete = async (id: string) => {
     try {
-      const { data } = await DeleteBlog(id);
-      getMyBlogs();
+      const response = await DeleteBlog(id);
+      if (response.status === 200) {
+        toast.success("Deleted successfully");
+        getMyBlogs();
+      } else {
+        toast.error("Something wrong");
+      }
     } catch (error) {
-      console.log(error);
+      toast.error(getErrorMessage(error));
     }
   };
 
@@ -71,13 +84,13 @@ const ProfilePage = () => {
           <div className="blogs-wrapper">
             {blogs.map((b) => {
               return (
-                <div className="blog-card relative" key={b._id}>
+                <div className="blog-card" key={b._id}>
                   <div className="">
                     <Link href={"/blogs/" + b._id}>
                       <img src="/blog.webp" alt="" className="blog-cover" />
                     </Link>
 
-                    <div className="my-blog-actions absolute right-2 bottom-2">
+                    <div className="my-blog-actions">
                       <Link href={"/edit/" + b._id}>
                         <button>Edit</button>
                       </Link>

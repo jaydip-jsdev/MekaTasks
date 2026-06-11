@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar/Navbar";
-import Card from "../components/Card/Card";
+import Navbar from "../components/global/Navbar/Navbar";
+import Card from "../components/reusable/Card/Card";
 import "./Blogs.css";
-import Footer from "../components/Footer/Footer";
+import Footer from "../components/global/Footer/Footer";
 import { Blog } from "@/Types/Blog";
 import { GetAllBlogs } from "@/services/api";
 import { toast } from "react-toastify";
@@ -16,7 +16,12 @@ const BlogsPage = () => {
   const getAllBlogs = async () => {
     try {
       const response = await GetAllBlogs();
-      setBlogs(response.data.data);
+      const blogs = response?.data?.data;
+      if (!blogs) {
+        toast.error("Blogs not found");
+        return;
+      }
+      setBlogs(blogs);
     } catch (error) {
       toast.error(getErrorMessage(error));
     }
