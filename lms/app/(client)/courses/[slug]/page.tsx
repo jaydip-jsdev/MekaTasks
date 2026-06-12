@@ -5,7 +5,7 @@ import styles from "./page.module.css";
 import { AddToHistory, getCourseDetails } from "@/lib/axios/api";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
-import { getErrorMessage } from "@/lib/ClientError";
+import { getErrorMessage } from "@/lib/errorHandling/ClientError";
 import { Course } from "@/Types/courses";
 
 const CourseDetailsPage = () => {

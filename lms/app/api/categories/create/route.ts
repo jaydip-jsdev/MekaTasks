@@ -1,7 +1,7 @@
 import CategoriesModel from "@/app/models/CategoriesModel";
-import { AdminAuth } from "@/lib/adminAuth";
-import { ApiError, ApiSuccess } from "@/lib/api-response";
-import ConnectDB from "@/lib/db";
+import { AdminAuth } from "@/lib/auth/adminAuth";
+import { ApiError, ApiSuccess } from "@/lib/response/api-response";
+import ConnectDB from "@/lib/database/db";
 import { NextRequest } from "next/server";
 
 interface RequestBody {

@@ -1,9 +1,9 @@
-import { ApiError, ApiSuccess } from "@/lib/api-response";
+import { ApiError, ApiSuccess } from "@/lib/response/api-response";
 import { NextRequest } from "next/server";
 import LessonsModel from "@/app/models/LessonsModel";
 import CourseModel from "@/app/models/CourseModel";
-import ConnectDB from "@/lib/db";
-import { AdminAuth } from "@/lib/adminAuth";
+import ConnectDB from "@/lib/database/db";
+import { AdminAuth } from "@/lib/auth/adminAuth";
 import { uploadToCloud } from "@/lib/cloudinary/UploadToCloud";
 
 export async function POST(req: NextRequest) {

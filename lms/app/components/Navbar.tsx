@@ -7,7 +7,7 @@ import Link from "next/link";
 import { logout } from "@/lib/axios/api";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { getErrorMessage } from "@/lib/ClientError";
+import { getErrorMessage } from "@/lib/errorHandling/ClientError";
 import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {

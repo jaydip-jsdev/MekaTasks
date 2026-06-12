@@ -1,6 +1,6 @@
 import CategoriesModel from "@/app/models/CategoriesModel";
-import { AdminAuth } from "@/lib/adminAuth";
-import { ApiError, ApiSuccess } from "@/lib/api-response";
+import { AdminAuth } from "@/lib/auth/adminAuth";
+import { ApiError, ApiSuccess } from "@/lib/response/api-response";
 import { NextRequest } from "next/server";
 
 export async function DELETE(
@@ -11,7 +11,7 @@ export async function DELETE(
 ) {
   try {
     const auth = await AdminAuth(req);
-    
+
     if (!auth.status) {
       return ApiError(auth.message || "Admin access required", auth.status);
     }

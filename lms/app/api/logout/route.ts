@@ -1,5 +1,5 @@
-import { ApiError } from "@/lib/api-response";
-import ConnectDB from "@/lib/db";
+import { ApiError } from "@/lib/response/api-response";
+import ConnectDB from "@/lib/database/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

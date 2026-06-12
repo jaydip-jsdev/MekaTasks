@@ -1,9 +1,9 @@
 import CategoriesModel from "@/app/models/CategoriesModel";
 import CourseModel from "@/app/models/CourseModel";
-import { AdminAuth } from "@/lib/adminAuth";
-import { ApiError, ApiSuccess } from "@/lib/api-response";
+import { AdminAuth } from "@/lib/auth/adminAuth";
+import { ApiError, ApiSuccess } from "@/lib/response/api-response";
 import { uploadToCloud } from "@/lib/cloudinary/UploadToCloud";
-import ConnectDB from "@/lib/db";
+import ConnectDB from "@/lib/database/db";
 import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {

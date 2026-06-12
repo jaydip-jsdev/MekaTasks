@@ -1,7 +1,7 @@
 import UserModel from "@/app/models/UsersModel";
-import { ApiError, ApiSuccess } from "@/lib/api-response";
-import ConnectDB from "@/lib/db";
-import { GenerateToken } from "@/lib/jwt";
+import { ApiError, ApiSuccess } from "@/lib/response/api-response";
+import ConnectDB from "@/lib/database/db";
+import { GenerateToken } from "@/lib/jwt/jwt";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, 
+      maxAge: 60 * 60 * 24 * 7,
     });
 
     return response;

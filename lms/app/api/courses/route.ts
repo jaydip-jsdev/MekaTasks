@@ -1,9 +1,9 @@
 import CourseModel from "@/app/models/CourseModel";
 import "@/app/models/CategoriesModel";
-import { ApiError, ApiSuccess } from "@/lib/api-response";
-import ConnectDB from "@/lib/db";
+import { ApiError, ApiSuccess } from "@/lib/response/api-response";
+import ConnectDB from "@/lib/database/db";
 import { NextRequest } from "next/server";
-import { VerifyToken } from "@/lib/jwt";
+import { VerifyToken } from "@/lib/jwt/jwt";
 import UserModel from "@/app/models/UsersModel";
 
 export async function GET(req: NextRequest) {

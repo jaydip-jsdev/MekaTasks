@@ -1,5 +1,5 @@
 import { addCategory } from "@/lib/axios/api";
-import { getErrorMessage } from "@/lib/ClientError";
+import { getErrorMessage } from "@/lib/errorHandling/ClientError";
 import { useState } from "react";
 import { toast } from "react-toastify";
 

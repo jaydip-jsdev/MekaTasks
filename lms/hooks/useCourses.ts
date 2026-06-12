@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/context/AuthContext";
 import { EnrollCourse, GetCourses } from "@/lib/axios/api";
-import { getErrorMessage } from "@/lib/ClientError";
+import { getErrorMessage } from "@/lib/errorHandling/ClientError";
 import { Course } from "@/Types/courses";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";

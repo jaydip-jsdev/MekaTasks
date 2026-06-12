@@ -1,10 +1,10 @@
 import LessonsModel from "@/app/models/LessonsModel";
-import { ApiError, ApiSuccess } from "@/lib/api-response";
-import ConnectDB from "@/lib/db";
+import { ApiError, ApiSuccess } from "@/lib/response/api-response";
+import ConnectDB from "@/lib/database/db";
 
 import { NextRequest } from "next/server";
 import CourseModel from "@/app/models/CourseModel";
-import { AdminAuth } from "@/lib/adminAuth";
+import { AdminAuth } from "@/lib/auth/adminAuth";
 import { uploadToCloud } from "@/lib/cloudinary/UploadToCloud";
 
 export async function GET(

@@ -1,6 +1,6 @@
 import CourseModel from "@/app/models/CourseModel";
-import { ApiError, ApiSuccess } from "@/lib/api-response";
-import ConnectDB from "@/lib/db";
+import { ApiError, ApiSuccess } from "@/lib/response/api-response";
+import ConnectDB from "@/lib/database/db";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {

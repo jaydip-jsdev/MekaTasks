@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { VerifyToken } from "./jwt";
+import { VerifyToken } from "../jwt/jwt";
 import { TokenPayload } from "@/Types/TokenPayload";
 
 export const AdminAuth = (req: NextRequest) => {

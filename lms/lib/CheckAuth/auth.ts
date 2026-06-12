@@ -1,7 +1,7 @@
-"use server"
+"use server";
 
 import { cookies } from "next/headers";
-import { VerifyToken } from "../jwt";
+import { VerifyToken } from "../jwt/jwt";
 
 const isAuthenticated = async () => {
   try {

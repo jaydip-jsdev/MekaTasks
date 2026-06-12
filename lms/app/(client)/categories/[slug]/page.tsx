@@ -6,7 +6,7 @@ import { EnrollCourse, GetCategories, GetCourses } from "@/lib/axios/api";
 import style from "./style.module.css";
 import Card from "@/app/components/card/Card";
 import { toast } from "react-toastify";
-import { getErrorMessage } from "@/lib/ClientError";
+import { getErrorMessage } from "@/lib/errorHandling/ClientError";
 import { Course } from "@/Types/courses";
 import { Category } from "@/Types/category";
 import { useAuth } from "@/context/AuthContext";

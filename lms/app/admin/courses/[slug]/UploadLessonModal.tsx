@@ -6,7 +6,7 @@ import {
   GetLessonById,
   UploadLesson,
 } from "@/lib/axios/api";
-import { getErrorMessage } from "@/lib/ClientError";
+import { getErrorMessage } from "@/lib/errorHandling/ClientError";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 

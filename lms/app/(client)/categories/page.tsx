@@ -1,7 +1,7 @@
 "use client";
 
 import { GetCategories } from "@/lib/axios/api";
-import { getErrorMessage } from "@/lib/ClientError";
+import { getErrorMessage } from "@/lib/errorHandling/ClientError";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Styles from "./style.module.css";
@@ -15,7 +15,7 @@ const CategoriesPage = () => {
     try {
       const response = await GetCategories();
       const data = response?.data?.data;
-      
+
       if (response.status === 200) {
         setCats(data);
       }

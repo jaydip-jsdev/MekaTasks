@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/context/AuthContext";
 import { login } from "@/lib/axios/api";
-import { getErrorMessage } from "@/lib/ClientError";
+import { getErrorMessage } from "@/lib/errorHandling/ClientError";
 import routes from "@/lib/ClientRoutes/route";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

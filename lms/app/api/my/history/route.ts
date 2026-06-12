@@ -1,7 +1,7 @@
 import HistoryModel from "@/app/models/HistoryModel";
-import { ApiError, ApiSuccess } from "@/lib/api-response";
-import ConnectDB from "@/lib/db";
-import { VerifyToken } from "@/lib/jwt";
+import { ApiError, ApiSuccess } from "@/lib/response/api-response";
+import ConnectDB from "@/lib/database/db";
+import { VerifyToken } from "@/lib/jwt/jwt";
 import { NextRequest } from "next/server";
 import "@/app/models/LessonsModel";
 

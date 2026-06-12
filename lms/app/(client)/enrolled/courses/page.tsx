@@ -1,7 +1,7 @@
 "use client";
 
 import { enrolledCourses } from "@/lib/axios/api";
-import { getErrorMessage } from "@/lib/ClientError";
+import { getErrorMessage } from "@/lib/errorHandling/ClientError";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 

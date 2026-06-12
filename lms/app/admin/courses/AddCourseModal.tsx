@@ -4,7 +4,7 @@ import {
   GetCategories,
   getCourseDetails,
 } from "@/lib/axios/api";
-import { getErrorMessage } from "@/lib/ClientError";
+import { getErrorMessage } from "@/lib/errorHandling/ClientError";
 import { Category } from "@/Types/category";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";

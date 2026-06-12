@@ -1,6 +1,6 @@
 import UserModel from "@/app/models/UsersModel";
-import { ApiError, ApiSuccess } from "@/lib/api-response";
-import ConnectDB from "@/lib/db";
+import { ApiError, ApiSuccess } from "@/lib/response/api-response";
+import ConnectDB from "@/lib/database/db";
 import bcrypt from "bcryptjs";
 import { NextRequest } from "next/server";
 

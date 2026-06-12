@@ -7,7 +7,7 @@ import { DeleteCourse, GetCourses } from "@/lib/axios/api";
 import AddCourseModal from "./AddCourseModal";
 import { Course } from "@/Types/courses";
 import { toast } from "react-toastify";
-import { getErrorMessage } from "@/lib/ClientError";
+import { getErrorMessage } from "@/lib/errorHandling/ClientError";
 
 const CoursePage = () => {
   const [courses, setCourses] = useState<Course[]>([]);
