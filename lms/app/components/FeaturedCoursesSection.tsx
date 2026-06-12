@@ -18,7 +18,7 @@ export default function FeaturedCoursesSection() {
       </p>
       <div>
         <div className={styles.cardContainer}>
-          {courses.slice(0, 8).map((course) => (
+          {courses.slice(0, 6).map((course) => (
             <Card
               key={course._id}
               title={course.title}
