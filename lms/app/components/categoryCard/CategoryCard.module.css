@@ -1,0 +1,55 @@
+.categoryCard {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  width: 220px;
+  border-radius: 1rem;
+  color: dodgerblue;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.categoryCard:hover {
+  background-color: dodgerblue;
+  color: white;
+  transform: translateY(-4px);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
+}
+
+.categoryCard p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .categoryCard {
+    width: 190px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .categoryCard p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .categoryCard {
+    width: 160px;
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .categoryCard p {
+    font-size: 0.75rem;
+  }
+
+  .categoryCard svg {
+    width: 18px;
+    height: 18px;
+  }
+}

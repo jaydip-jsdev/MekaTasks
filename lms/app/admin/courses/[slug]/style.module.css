@@ -1,0 +1,95 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header button {
+  background-color: dodgerblue;
+  padding: 1.4vh 3vw;
+  color: white;
+  border: none;
+  border-radius: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.lessonsList {
+  display: flex;
+  align-items: start;
+  margin-top: 2vh;
+  flex-direction: column;
+  gap: 2rem;
+  list-style: none;
+}
+
+.lessonsList li {
+  height: 6vh;
+  border: 1px solid dodgerblue;
+  width: 100%;
+  height: fit-content;
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 2rem;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.lessonThumbnail {
+  height: 100px;
+  min-width: 10vw;
+  max-width: 20%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.lesson {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lessonsList .noLessons {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  color: red;
+  font-size: 24px;
+  justify-content: center;
+  width: 100%;
+}
+
+.loading {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  color: red;
+  font-size: 24px;
+  justify-content: center;
+  width: 100%;
+}
+
+.lessonActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.lessonActions button {
+  width: 5vw;
+  height: 4vh;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+
+.lessonActions :nth-child(1) {
+  background-color: dodgerblue;
+}
+
+.lessonActions :nth-child(2) {
+  background-color: red;
+}

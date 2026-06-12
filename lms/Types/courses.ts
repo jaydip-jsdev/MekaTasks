@@ -1,0 +1,28 @@
+import type { Category } from "./category";
+import { Lesson } from "./Lesson";
+
+export interface Course {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string;
+
+  category: Category | string;
+
+  lessons: Lesson[];
+
+  thumbnail?: string;
+  totalLessons?: number;
+  enrolledStudents?: number;
+  isPublished: boolean;
+  isEnrolled?: boolean;
+
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface CourseRef {
+  _id: string;
+  slug: string;
+  title?: string;
+}

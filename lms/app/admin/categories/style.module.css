@@ -1,0 +1,54 @@
+.category-header {
+  display: flex;
+  justify-content: end;
+}
+
+.category-header button {
+  background-color: dodgerblue;
+  width: 8vw;
+  height: 4vh;
+  border: none;
+  color: white;
+  font-weight: 700;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.card-container {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.category-card {
+  position: relative;
+  width: 25vw;
+  background-color: antiquewhite;
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  border: 1px solid dodgerblue;
+}
+
+.deleteBtn {
+  position: absolute;
+  top: 8;
+  right: 10;
+  color: white;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.notFound {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 24px;
+  color: red;
+}

@@ -1,0 +1,71 @@
+### register user 
+POST http://localhost:3000/api/register
+Content-Type : application/json
+
+{
+    "name": "Yasin",
+    "email" : "admin@gmail.com",
+    "password": "admin123"
+}
+
+### login user
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+    "email" : "admin@gmail.com",
+    "password" : "admin123"
+}
+
+### create category
+POST http://localhost:3000/api/categories/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMWQ1OTI4NWM3YmVjZWVlMjI0ZWNiNCIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgwMzE0MzMxLCJleHAiOjE3ODAzMTc5MzF9.iQcM0vjixCHNuQSyGrhSkvhJ4IcIsS0rtkZNydQv7Bg
+
+{
+    "name" : "new",
+    "slug" : "new"
+}
+
+### create course
+POST http://localhost:3000/api/courses/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMWQ1OTI4NWM3YmVjZWVlMjI0ZWNiNCIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgwNDA2MDAyLCJleHAiOjE3ODA0MDk2MDJ9.Ogr9VN_7ue2dXADq3-Ekfv2IvAdiU1yG8ZWsxusAhJY
+
+{
+    "title" : "MEka Training",
+    "slug" : "meka",
+    "description" : "this course is for next.js",
+    "category" : "bca"
+}
+
+### update course by id
+PATCH http://localhost:3000/api/courses/6a1e791736dfe79d43fdd1cc
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMWQ1OTI4NWM3YmVjZWVlMjI0ZWNiNCIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgwMzgxODQ2LCJleHAiOjE3ODAzODU0NDZ9.xRwaVfusyVhyl21ws5elot2nd7crfeq7S6uD8kcgtb8
+
+{
+    "title" : "JavaScript",
+    "slug" : "learn-js"
+}
+
+### delete course by id
+DELETE http://localhost:3000/api/courses/6a1e791736dfe79d43fdd1cc
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMWQ1OTI4NWM3YmVjZWVlMjI0ZWNiNCIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgwMzgxODQ2LCJleHAiOjE3ODAzODU0NDZ9.xRwaVfusyVhyl21ws5elot2nd7crfeq7S6uD8kcgtb8
+
+### Get All courses
+GET http://localhost:3000/api/courses
+
+### get course by id
+GET http://localhost:3000/api/courses/6a1d73f89eb4b01bcc565821
+
+### get lessons by courseId
+GET http://localhost:3000/api/lessons?courseId=6a1e6651ba8a996ebc6f7646
+
+### get lesson by id
+GET http://localhost:3000/api/lessons/6a1d80699eb4b01bcc565822
+
+### delete lesson
+DELETE http://localhost:3000/api/lessons/6a1d80699eb4b01bcc565822
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMWQ1OTI4NWM3YmVjZWVlMjI0ZWNiNCIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgwMzg2MDUyLCJleHAiOjE3ODAzODk2NTJ9.Y5cQgX10p_DzruOqhrZEC4-wEse8K9t6_b1wuWAa3D4
